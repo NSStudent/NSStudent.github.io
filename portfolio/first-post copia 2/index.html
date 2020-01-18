@@ -2,7 +2,7 @@
     <a href="https://talk.objc.io/episodes/S01E145-setting-up-a-document-based-app">
       <img width="600" alt="video cover" src="https://i.vimeocdn.com/video/769411132.jpg">
     </a>
-</p><p>test</p><p>The <a href="https://talk.objc.io/episodes/S01E145-setting-up-a-document-based-app">first episode</a> previews the app, and is free to watch.</p><ul><li>145: <a href="https://talk.objc.io/episodes/S01E145-setting-up-a-document-based-app">Setting Up a Document Based App</a> — 🆓 Public</li><li>146: <a href="https://talk.objc.io/episodes/S01E146-markdown-syntax-highlighting">Markdown Syntax Highlighting</a> — 🔒 Subscriber</li><li>147: <a href="https://talk.objc.io/episodes/S01E147-executing-swift-code">Executing Swift Code</a> — 🔒 Subscriber</li><li>148: <a href="https://talk.objc.io/episodes/S01E148-string-handling">String Handling</a> — 🔒 Subscriber</li></ul><h2>Building</h2><p><em>Note</em>: currently this builds, but doesn't run from Xcode. Instead, build and run from the command line.</p><ul><li>You need to have <a href="https://github.com/commonmark/cmark">cmark</a> installed <em>from master</em> (not via homebrew). If you use the version from homebrew, you won't get proper syntax highlighting (specifically: for inline elements).</li><li>This project uses <a href="https://github.com/apple/swift-package-manager">Swift Package Manager</a>. You can either run "swift build" or do "swift package generate-xcodeproj"</li></ul><p>Here are the steps as shell commands:</p><pre><code class="language-sh">git clone https://github.com/commonmark/cmark
+</p><p>test</p><p>The <a href="https://talk.objc.io/episodes/S01E145-setting-up-a-document-based-app">first episode</a> previews the app, and is free to watch.</p><ul><li>145: <a href="https://talk.objc.io/episodes/S01E145-setting-up-a-document-based-app">Setting Up a Document Based App</a> — 🆓 Public</li><li>146: <a href="https://talk.objc.io/episodes/S01E146-markdown-syntax-highlighting">Markdown Syntax Highlighting</a> — 🔒 Subscriber</li><li>147: <a href="https://talk.objc.io/episodes/S01E147-executing-swift-code">Executing Swift Code</a> — 🔒 Subscriber</li><li>148: <a href="https://talk.objc.io/episodes/S01E148-string-handling">String Handling</a> — 🔒 Subscriber</li></ul><h2>Building</h2><p><em>Note</em>: currently this builds, but doesn't run from Xcode. Instead, build and run from the command line.</p><ul><li>You need to have <a href="https://github.com/commonmark/cmark">cmark</a> installed <em>from master</em> (not via homebrew). If you use the version from homebrew, you won't get proper syntax highlighting (specifically: for inline elements).</li><li>This project uses <a href="https://github.com/apple/swift-package-manager">Swift Package Manager</a>. You can either run "swift build" or do "swift package generate-xcodeproj"</li></ul><p>Here are the steps as shell commands:</p><pre><code>git clone https://github.<span class="property">com</span>/commonmark/cmark
 cd cmark
 mkdir build
 cd build
@@ -12,12 +12,12 @@ make test
 make install
 cd ../..
 
-# Building this project
-git clone https://github.com/objcio/markdown-playgrounds
+# <span class="type">Building</span> this project
+git clone https://github.<span class="property">com</span>/objcio/markdown-playgrounds
 cd markdown-playgrounds
 swift build
 
-# If you want to edit this in Xcode
+# <span class="type">If</span> you want to edit this <span class="keyword">in</span> <span class="type">Xcode</span>
 swift package generate-xcodeproj
 xed .
 </code></pre><h2>Future Direction</h2><p>This project could head in a number of directions, and there are many useful features we could add. Our main goal is to keep using this for authoring Swift-heavy Markdown, which will guide our decisions when we decide on new features.</p><p>To keep things simple, we have collected a list of todos in <a href="todo.txt">todo.txt</a>.</p><h2>License</h2><p>This library is released under the MIT license. See <a href="LICENSE">LICENSE</a> for details.</p></div></article></div><footer><p>Generated using <a href="https://github.com/johnsundell/publish">Publish</a></p><p><a href="/feed.rss">RSS feed</a></p></footer></body></html>
