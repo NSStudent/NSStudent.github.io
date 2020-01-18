@@ -12,6 +12,6 @@ jobs:
       uses: SamKirkland/FTP-Deploy-Action@2.0.0
       env:
         FTP_SERVER: ftp.nsstudent.es
-        FTP_USERNAME: GithubAction
+        FTP_USERNAME: GithubAction@nsstudent.dev
         FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
         ARGS: --delete
