@@ -1,0 +1,22 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"/><meta name="og:site_name" content="NSStudent"/><link rel="canonical" href="https://nsstudent.dev/portfolio/test-plugins"/><meta name="twitter:url" content="https://nsstudent.dev/portfolio/test-plugins"/><meta name="og:url" content="https://nsstudent.dev/portfolio/test-plugins"/><title>test my plugins | NSStudent</title><meta name="twitter:title" content="test my plugins | NSStudent"/><meta name="og:title" content="test my plugins | NSStudent"/><meta name="description" content="A description of my first post."/><meta name="twitter:description" content="A description of my first post."/><meta name="og:description" content="A description of my first post."/><meta name="twitter:card" content="summary"/><link rel="stylesheet" href="/styles.css" type="text/css"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><link rel="shortcut icon" href="/images/favicon.png" type="image/png"/><link rel="alternate" href="/feed.rss" type="application/rss+xml" title="Subscribe to NSStudent"/><meta name="twitter:image" content="https://nsstudent.dev/images/logo.png"/><meta name="og:image" content="https://nsstudent.dev/images/logo.png"/></head><body><header><div class="topnav"><div class="topnav-left"><a href="/"><img src="/images/logo-44-dark.png"/><p>NSStudent</p></a></div><div class="topnav-right"><a class="selected" href="/">Home</a><a href="/about">About me</a><a href="/posts">My posts</a></div></div></header><div class="wrapper"><article><div class="content"><h1>test my plugins</h1><p>+!+ meta <code>code</code> probando <em>italic</em> y <strong>bold</strong> a ver que pasa si el codigo es mas largo o tiene saltos de linea no tiene problema +!+</p><blockquote><p>meta <code>code</code> probando <em>italic</em> y <strong>bold</strong> a ver que pasasi el codigo es mas largo o tiene saltos de lineano tiene problema</p></blockquote><p>My first post's text.</p><pre><code class="language-swift">import Publish
+import ShellOut
+
+extension DeploymentMethod {
+    static func awsS3(
+        bucket: String = "josephvb.com", 
+        s3Profile: String = "josephvb-website"
+    ) -&gt; Self {
+        Self(name: "AWS-S3") { context in
+            let deploymentFolder = try context.createDeploymentFolder(
+                withPrefix: "AWS-S3-", configure: { _ in }
+            )
+            try shellOut(
+                to: "aws2 s3 sync . s3:\(bucket) --profile \(s3Profile)",
+                at: deploymentFolder.path,
+                outputHandle: .standardOutput,
+                errorHandle: .standardError
+            )
+        }
+    }
+}
+</code></pre><p>try to test Splash plugin in a post</p></div></article></div><footer><p>Generated using <a href="https://github.com/johnsundell/publish">Publish</a></p><p><a href="/feed.rss">RSS feed</a></p></footer></body></html>

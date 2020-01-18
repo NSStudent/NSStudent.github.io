@@ -1,0 +1,396 @@
+/**
+*  Publish Foundation theme
+*  Copyright (c) John Sundell 2019
+*  MIT license, see LICENSE file for details
+*/
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+article p code, article li code {
+    background-color: #e2e2e2;
+    display: inline-block;
+    padding: 0 5px;
+    border-radius: 8px;
+    font-size: 1em;
+    margin: 1px;
+}
+
+article h1 a {
+    text-decoration: none;
+}
+
+article h1 a:hover {
+  color: #3C6AFF;
+}
+
+blockquote {
+    background: #FFFFFF;
+    padding: 10px;
+    border-radius: 11px;
+    border: 2px solid #3C6AFF;
+    margin-bottom: 10px;
+}
+
+article blockquote p {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+article p.info {
+    background: #FFFFFF;
+    padding: 10px;
+    border-radius: 11px;
+    border: 2px solid #3C6AFF;
+    margin-top: 0px;
+    margin-bottom: 10px;
+}
+
+body {
+    background: #F2F3F7;
+    color: #000;
+    font-family: Helvetica, Arial;
+    text-align: center;
+}
+
+.item-list article p {
+    margin-top: 0px;
+}
+
+article p {
+    margin-bottom: 20px;
+}
+
+.wrapper {
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 40px;
+    text-align: left;
+}
+
+h1 {
+    margin-bottom: 20px;
+    font-size: 2em;
+}
+
+h2 {
+    margin: 20px 0;
+}
+
+p {
+    margin-bottom: 18px;
+    font-size: 18px;
+    line-height: 24px;
+}
+
+a {
+    color: inherit;
+}
+
+.description {
+    margin-bottom: 40px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 10px;
+    grid-auto-rows: minmax(100px, auto);
+}
+
+.item-list > li {
+    display: block;
+    padding: 20px;
+    border-radius: 20px;
+    background-color: #F9F9F9;
+    margin-top: 20px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.01);
+}
+
+.item-list h1 {
+    margin-bottom: 10px;
+    font-size: 1.3em;
+}
+
+.item-list p {
+    margin-bottom: 0;
+    color: #AFB1BF
+}
+
+.tag-list {
+    margin-bottom: 5px;
+}
+
+.tag-list li,
+.tag {
+    display: inline-block;
+    background-color: #3C6AFF;
+    color: #ddd;
+    padding: 4px 6px;
+    border-radius: 5px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
+
+.tag-list a,
+.tag a {
+    text-decoration: none;
+}
+
+.item-page .tag-list {
+    display: inline-block;
+}
+
+.content {
+    margin-bottom: 40px;
+}
+
+.browse-all {
+    display: block;
+    margin-bottom: 30px;
+}
+
+.all-tags li {
+    font-size: 1.4em;
+    margin-right: 10px;
+    padding: 6px 10px;
+}
+
+footer {
+    color: #8a8a8a;
+}
+
+/**
+ *  Example CSS file that can be used to style Splash HTML output
+ *  Copyright (c) John Sundell 2018
+ *  MIT license - see LICENSE.md
+ */
+
+ pre {
+    margin-bottom: 1.5em;
+    background-color: #1C1F21;
+    padding: 16px 0;
+    border-radius: 16px;
+}
+
+pre code {
+    font-family: monospace;
+    display: block;
+    padding: 0 20px;
+    color: #a9bcbc;
+    line-height: 1.6em;
+    font-size: 1.2em;
+    overflow-x: auto;
+    white-space: pre;
+    -webkit-overflow-scrolling: touch;
+}
+
+pre code .keyword {
+    color: #B170C0;
+}
+
+pre code .type {
+    color: #E4692B;
+}
+
+pre code .call {
+    color: #5B99C3;
+}
+
+pre code .property {
+    color: #21ab9d;
+}
+
+pre code .number {
+    color: #AEE073;
+}
+
+pre code .string {
+    color: #9EC763;
+}
+
+pre code .comment {
+    color: #515151;
+}
+
+pre code .dotAccess {
+    color: #92b300;
+}
+
+pre code .preprocessing {
+    color: #b68a00;
+}
+
+/*PROGRESS BAR*/
+
+.progressbardiv {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.progressbar {
+  background-color: #202E3F;
+  border-radius: 13px;
+  /* (height of inner div) / 2 + padding */
+  padding: 3px;
+}
+
+.inprogressbar {
+  background-color: #3C6AFF;
+  width:0%;
+  height: 20px;
+  border-radius: 10px;
+}
+
+/*TOP NAVIGATION BAR*/
+
+/* Add a black background color to the top navigation */
+.topnav {
+  background-color: #FFFFFF;
+  overflow: hidden;
+}
+
+/* Style the links inside the navigation bar */
+.topnav a {
+  float: left;
+  display: block;
+  color: #AFB1BF;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+  border-bottom: 3px solid transparent;
+}
+
+.topnav a:hover {
+  border-bottom: 3px solid #3C6AFF;
+}
+
+.topnav-left a {
+  float: left;
+  padding: 0px;
+}
+
+.topnav-left a:hover {
+  -webkit-filter: invert(100%);
+  filter: invert(100%);
+  border-bottom: 0px solid #3C6AFF;
+}
+
+.topnav a.selected {
+  border-bottom: 3px solid #3C6AFF;
+}
+
+/* Right-aligned section inside the top navigation */
+.topnav-right {
+  float: right;
+}
+
+.topnav-left img{
+    float: left;
+    display: block;
+    margin-left: 16px;
+    margin-right: 4px;
+    text-align: center;
+}
+
+.topnav-left p{
+  float: left;
+  display: block;
+  color: #000;
+  text-align: center;
+  margin: 0px;
+  padding: 12px 0px;
+  text-decoration: none;
+  font-size: 24px;
+}
+
+@media(max-width: 650px) {
+    .grid {
+        grid-template-columns: repeat(1, 1fr);
+    }
+    
+    .topnav a {
+        float: none;
+    }
+    
+    .topnav-left p {
+        float: none;
+        font-size: 2em;
+    }
+    
+    .topnav-left img {
+        float: none;
+        margin: 20px auto auto auto;
+    }
+    
+    .topnav-right {
+        float: none;
+    }
+    
+    .topnav-left {
+        float: none;
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #3A464E;
+        color: #ddd;
+    }
+    
+    article p code, article li code {
+        background-color: #1C1F21;
+    }
+
+    .item-list > li {
+        background-color: #283238;
+    }
+    
+    .topnav-left img {
+        -webkit-filter: invert(70%);
+        filter: invert(70%);
+    }
+    
+    .topnav-left p {
+        color: #AFB1BF;
+    }
+    
+    .topnav {
+      background-color: #283238;
+    }
+    
+    .inprogressbar {
+      background-color: #5667AD;
+    }
+    
+    .tag-list li,
+    .tag {
+        background-color: #5667AD;
+    }
+    
+    blockquote {
+        background: #283238;
+        border: 2px solid #5667AD;
+    }
+    
+    article p.info {
+        background: #283238;
+        border: 2px solid #5667AD;
+    }
+}
+
+
+.variant-0 {background-color: #66293c;}
+.variant-1 {background-color: #913e37;}
+.variant-2 {background-color: #ca7618;}
+.variant-3 {background-color: #a38138;}
+.variant-4 {background-color: #2f7176;}
+.variant-5 {background-color: #246089;}
+.variant-6 {background-color: #498840;}
+.variant-7 {background-color: #484781;}
+
