@@ -1,0 +1,17 @@
+name: CI
+
+on: [push]
+
+jobs:
+  FTP-Deploy-Action:
+    name: FTP-Deploy-Action
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: FTP-Deploy-Action
+      uses: SamKirkland/FTP-Deploy-Action@2.0.0
+      env:
+        FTP_SERVER: ftp.nsstudent.es
+        FTP_USERNAME: GithubAction
+        FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+        ARGS: --delete
