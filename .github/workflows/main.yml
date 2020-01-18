@@ -14,4 +14,4 @@ jobs:
         FTP_SERVER: ftp.nsstudent.es
         FTP_USERNAME: GithubAction@nsstudent.dev
         FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
-        ARGS: --delete --exclude-glob=**/.git*/** --exclude-glob=**/.git**
+        ARGS: --delete --exclude-glob=**/.git*/** --exclude-glob=**/.git** --delete-excluded
