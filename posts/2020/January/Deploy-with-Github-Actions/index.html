@@ -58,9 +58,7 @@
             }
         }
     }
-</code></pre><p>The magic happens when the <code>context</code> calls <code>context.createDeploymentFolder </code> function. This method creates a new folder with the name <code>GitDeploy</code> inside to a hidden folder <code>.publish</code>.</p><p>You have right now all the code in your repository.</p><p>To create the action to upload the website in the server via FTP you need to add the following <code>main.yml</code> file:</p><pre><code>
-
-name: <span class="type">Deploy</span> website
+</code></pre><p>The magic happens when the <code>context</code> calls <code>context.createDeploymentFolder </code> function. This method creates a new folder with the name <code>GitDeploy</code> inside to a hidden folder <code>.publish</code>.</p><p>You have right now all the code in your repository.</p><p>To create the action to upload the website in the server via FTP you need to add the following <code>main.yml</code> file:</p><pre><code>name: <span class="type">Deploy</span> website
 
 on: [push]
 
