@@ -15,8 +15,20 @@ article p code, article li code {
     display: inline-block;
     padding: 0 5px;
     border-radius: 8px;
-    font-size: 1em;
+    font-size: 0.8em;
     margin: 1px;
+}
+
+article p a:hover {
+    color: #3C6AFF;
+}
+
+article .metadata span {
+    padding-left: 10px;
+}
+
+article .metadata {
+    margin-bottom: 20px;
 }
 
 article h1 a {
@@ -32,7 +44,7 @@ blockquote {
     padding: 10px;
     border-radius: 11px;
     border: 2px solid #3C6AFF;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
 }
 
 article blockquote p {
@@ -84,7 +96,7 @@ h2 {
 p {
     margin-bottom: 18px;
     font-size: 18px;
-    line-height: 24px;
+    line-height: 28px;
 }
 
 a {
@@ -307,6 +319,7 @@ pre code .preprocessing {
   padding: 12px 0px;
   text-decoration: none;
   font-size: 24px;
+  line-height: 24px;
 }
 
 @media(max-width: 650px) {
