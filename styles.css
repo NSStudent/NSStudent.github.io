@@ -109,9 +109,14 @@ a {
 
 .grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     grid-gap: 10px;
     grid-auto-rows: minmax(100px, auto);
+}
+
+.grid .blog-card {
+  grid-template-columns: auto;
+  grid-template-rows: 12rem 1fr;
 }
 
 .item-list > li {
@@ -407,6 +412,10 @@ pre code .preprocessing {
   overflow: hidden;
 }
 
+.date {
+    font-weight: 100;
+}
+
 .card-link {
   position: relative;
   display: block;
@@ -437,13 +446,6 @@ pre code .preprocessing {
 }
 
 @supports (display: grid) {
-  wrapper {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-gap: 0.625rem;
-    grid-template-areas: ". main main ." ". main main .";
-  }
-  
   .post-image {
     height: 100%;
   }
