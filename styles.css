@@ -39,6 +39,15 @@ article h1 a:hover {
   color: #3C6AFF;
 }
 
+article p.aligncenter {
+    text-align: center;
+}
+
+article img {
+      max-width: 100%;
+      height: auto;
+}
+
 blockquote {
     background: #FFFFFF;
     padding: 10px;
@@ -463,3 +472,7 @@ pre code .preprocessing {
     }
   }
 }
+
+
+
+
