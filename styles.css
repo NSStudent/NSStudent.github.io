@@ -173,10 +173,11 @@ a {
     display: inline-block;
     background-color: #3C6AFF;
     color: #ddd;
-    padding: 1px 6px;
+    padding: 0px 6px;
     border-radius: 5px;
     margin-right: 5px;
     margin-bottom: 5px;
+    font-size: 0.8em;
 }
 
 .tag-list a,
@@ -198,9 +199,9 @@ a {
 }
 
 .all-tags li {
-    font-size: 1.4em;
-    margin-right: 10px;
-    padding: 6px 10px;
+    font-size: 1.0em;
+    margin-right: 8px;
+    padding: 1px 8px;
 }
 
 footer {
@@ -491,34 +492,32 @@ pre code .preprocessing {
   }
 }
 
-.tag-list .variant-1  {background-color: var(--sapphire);}
-.tag-list .variant-2 {background-color: var(--celtic-blue);}
-.tag-list .variant-3 {background-color: var(--cerulean);}
-.tag-list .variant-4 {background-color: var(--light-sea-green);}
-.tag-list .variant-5 {background-color: var(--cambridge-blue);}
-.tag-list .variant-6 {background-color: var(--fandango);}
-.tag-list .variant-7 {background-color: var(--magenta-pantone);}
-.tag-list .variant-0 {background-color: var(--indian-red);}
-.variant-1  {background-color: var(--sapphire);}
-.variant-2 {background-color: var(--celtic-blue);}
-.variant-3 {background-color: var(--cerulean);}
-.variant-4 {background-color: var(--light-sea-green);}
-.variant-5 {background-color: var(--cambridge-blue);}
-.variant-6 {background-color: var(--fandango);}
-.variant-7 {background-color: var(--magenta-pantone);}
-.variant-0 {background-color: var(--indian-red);}
+.tag-list .variant-1  {background-color: var(--tag-one);}
+.tag-list .variant-2 {background-color: var(--tag-two);}
+.tag-list .variant-3 {background-color: var(--tag-three);}
+.tag-list .variant-4 {background-color: var(--tag-four);}
+.tag-list .variant-5 {background-color: var(--tag-five);}
+.tag-list .variant-6 {background-color: var(--tag-six);}
+.tag-list .variant-7 {background-color: var(--tag-seven);}
+.tag-list .variant-0 {background-color: var(--tag-zero);}
+.variant-1  {background-color: var(--tag-one);}
+.variant-2 {background-color: var(--tag-two);}
+.variant-3 {background-color: var(--tag-three);}
+.variant-4 {background-color: var(--tag-four);}
+.variant-5 {background-color: var(--tag-five);}
+.variant-6 {background-color: var(--tag-six);}
+.variant-7 {background-color: var(--tag-seven);}
+.variant-0 {background-color: var(--tag-zero);}
 
 /* CSS HEX */
 :root {
-    --sapphire: #0450b4ff;
-    --celtic-blue: #046dc8ff;
-    --cerulean: #1184a7ff;
-    --light-sea-green: #15a2a2ff;
-    --cambridge-blue: #6fb1a0ff;
-    --fandango: #b4418eff;
-    --magenta-pantone: #d94a8cff;
-    --indian-red: #ea515fff;
-    --orange-crayola: #fe7434ff;
-    --orange-web: #fea802ff;
+    --tag-zero: #7B5150ff;
+    --tag-one: #4d194dff;
+    --tag-two: #438D82ff;
+    --tag-three: #1184a7ff;
+    --tag-four: #15a2a2ff;
+    --tag-five: #6fb1a0ff;
+    --tag-six: #b4418eff;
+    --tag-seven: #800f2fff;
 }
 
