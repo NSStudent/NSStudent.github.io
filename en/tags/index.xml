@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on NSStudent blog</title>
+    <link>https://nsstudent.dev/en/tags/</link>
+    <description>Recent content in Tags on NSStudent blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>© 2024 NSStudent</copyright>
+    <lastBuildDate>Sun, 10 Nov 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://nsstudent.dev/en/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Example</title>
+      <link>https://nsstudent.dev/en/tags/example/</link>
+      <pubDate>Sun, 10 Nov 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://nsstudent.dev/en/tags/example/</guid>
+      <description></description>
+      
+    </item>
+    
+    <item>
+      <title>Publish</title>
+      <link>https://nsstudent.dev/en/tags/publish/</link>
+      <pubDate>Sun, 10 Nov 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://nsstudent.dev/en/tags/publish/</guid>
+      <description></description>
+      
+    </item>
+    
+    <item>
+      <title>Swift</title>
+      <link>https://nsstudent.dev/en/tags/swift/</link>
+      <pubDate>Sun, 10 Nov 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://nsstudent.dev/en/tags/swift/</guid>
+      <description></description>
+      
+    </item>
+    
+    <item>
+      <title>Tag</title>
+      <link>https://nsstudent.dev/en/tags/tag/</link>
+      <pubDate>Sun, 10 Nov 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://nsstudent.dev/en/tags/tag/</guid>
+      <description></description>
+      
+    </item>
+    
+    <item>
+      <title>Basics</title>
+      <link>https://nsstudent.dev/en/tags/basics/</link>
+      <pubDate>Wed, 11 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://nsstudent.dev/en/tags/basics/</guid>
+      <description></description>
+      
+    </item>
+    
+    <item>
+      <title>Struct</title>
+      <link>https://nsstudent.dev/en/tags/struct/</link>
+      <pubDate>Wed, 11 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://nsstudent.dev/en/tags/struct/</guid>
+      <description></description>
+      
+    </item>
+    
+    <item>
+      <title>Tips</title>
+      <link>https://nsstudent.dev/en/tags/tips/</link>
+      <pubDate>Wed, 11 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://nsstudent.dev/en/tags/tips/</guid>
+      <description></description>
+      
+    </item>
+    
+  </channel>
+</rss>
