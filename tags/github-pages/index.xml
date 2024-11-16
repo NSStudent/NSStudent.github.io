@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Github-Pages on NSStudent blog</title>
+    <link>https://nsstudent.dev/tags/github-pages/</link>
+    <description>Recent content in Github-Pages on NSStudent blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>es</language>
+    <copyright>© 2024 NSStudent</copyright>
+    <lastBuildDate>Wed, 06 Nov 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://nsstudent.dev/tags/github-pages/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Crear un Blog con Hugo y Publicarlo en GitHub Pages</title>
+      <link>https://nsstudent.dev/posts/1731339196748-crear-blog-en-hugo/</link>
+      <pubDate>Wed, 06 Nov 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://nsstudent.dev/posts/1731339196748-crear-blog-en-hugo/</guid>
+      <description></description>
+      <media:content xmlns:media="http://search.yahoo.com/mrss/" url="https://nsstudent.dev/posts/1731339196748-crear-blog-en-hugo/featured.es.png" />
+    </item>
+    
+  </channel>
+</rss>
