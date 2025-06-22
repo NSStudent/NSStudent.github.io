@@ -26,8 +26,10 @@
   
   
   
-  <link type="text/css" rel="stylesheet" href="/css/main.bundle.min.6c9eec13f03518b8663406f567304750781f69890035b43c1d647d0c0af91fee5b684d016e6b2a73c5a47b7a691f76b4d9d32850c1f156184fc0f34d58f1b13f.css"
-    integrity="sha512-bJ7sE/A1GLhmNAb1ZzBHUHgfaYkANbQ8HWR9DAr5H&#43;5baE0Bbmsqc8Wke3ppH3a02dMoUMHxVhhPwPNNWPGxPw==" />
+  
+  
+  <link type="text/css" rel="stylesheet" href="/css/main.bundle.min.a8996c638098c6509a42901495527fdc9efa218fce48e18e4367593c2cc0beba5a35289387993fa1d6f6ba0de6d3b9c08c222e1a1726a76617c5d2cce09fa383.css"
+    integrity="sha512-qJlsY4CYxlCaQpAUlVJ/3J76IY/OSOGOQ2dZPCzAvrpaNSiTh5k/odb2ug3m07nAjCIuGhcmp2YXxdLM4J&#43;jgw==" />
   
   
   <script type="text/javascript" src="/js/appearance.min.cac54d22c89ddb354768852c8a353c87aed08f34c283d4deb40613094cf0b391e2c6e705f7a7b55665f97e7682eb89665600110cc6b74af346d38f7a9d05e7f4.js"
@@ -43,11 +45,8 @@
   
   
   
-  
-  
-  
-  <script defer type="text/javascript" id="script-bundle" src="/js/main.bundle.min.461c44800ee64aced53547ac575043247d94bd065e67a4918d19a1a1da0a1cff73de01305bf70a1d34d48c4ba7d12ff03613dd007345827c4d07ab5129974e68.js"
-    integrity="sha512-RhxEgA7mSs7VNUesV1BDJH2UvQZeZ6SRjRmhodoKHP9z3gEwW/cKHTTUjEun0S/wNhPdAHNFgnxNB6tRKZdOaA==" data-copy="Copiar" data-copied="Copiado"></script>
+  <script defer type="text/javascript" id="script-bundle" src="/js/main.bundle.min.a8a592b9b916d1cb9f2509f4cbb36d02159e75d09c4253315292012c9b7901a5236afee765a620cafb876a92827fb308807fdc69d7e6a664de0cf32018549206.js"
+    integrity="sha512-qKWSubkW0cufJQn0y7NtAhWeddCcQlMxUpIBLJt5AaUjav7nZaYgyvuHapKCf7MIgH/cadfmpmTeDPMgGFSSBg==" data-copy="Copiar" data-copied="Copiado"></script>
   
   
   
@@ -879,28 +878,108 @@
 <li>
 <p><strong>Inicializar un Nuevo Proyecto de Hugo</strong><br>
 Crea un directorio para tu blog e inicializa el proyecto:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">mkdir MiBlog
+
+<div class="highlight"><pre tabindex="0" class="chroma-custom"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">mkdir MiBlog
 </span></span><span class="line"><span class="cl"><span class="nb">cd</span> MiBlog
-</span></span><span class="line"><span class="cl">hugo new site .
-</span></span></code></pre></div></li>
+</span></span><span class="line"><span class="cl">hugo new site .</span></span></code></pre></div>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const updateCodeBlockTheme = () => {
+    const isDark = document.documentElement.classList.contains('dark')
+    const codeBlocks = document.querySelectorAll('.chroma-custom, .chroma-custom-dark')
+    codeBlocks.forEach(block => {
+      block.classList.remove('chroma-custom', 'chroma-custom-dark')
+      block.classList.add(isDark ? 'chroma-custom-dark' : 'chroma-custom')
+    })
+  }
+
+  updateCodeBlockTheme()
+
+  const observer = new MutationObserver(updateCodeBlockTheme)
+  observer.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ['class']
+  })
+})
+</script></li>
 <li>
 <p><strong>Elegir un Tema</strong><br>
 Busca un tema que te guste en <a href="https://themes.gohugo.io/" target="_blank">Hugo Themes</a> y clónalo en tu proyecto:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">git init
+
+<div class="highlight"><pre tabindex="0" class="chroma-custom"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">git init
 </span></span><span class="line"><span class="cl">git submodule add https://github.com/&lt;autor&gt;/&lt;tema&gt;.git themes/&lt;tema&gt;
-</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s1">&#39;theme = &#34;&lt;tema&gt;&#34;&#39;</span> &gt;&gt; config.toml
-</span></span></code></pre></div></li>
+</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s1">&#39;theme = &#34;&lt;tema&gt;&#34;&#39;</span> &gt;&gt; config.toml</span></span></code></pre></div>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const updateCodeBlockTheme = () => {
+    const isDark = document.documentElement.classList.contains('dark')
+    const codeBlocks = document.querySelectorAll('.chroma-custom, .chroma-custom-dark')
+    codeBlocks.forEach(block => {
+      block.classList.remove('chroma-custom', 'chroma-custom-dark')
+      block.classList.add(isDark ? 'chroma-custom-dark' : 'chroma-custom')
+    })
+  }
+
+  updateCodeBlockTheme()
+
+  const observer = new MutationObserver(updateCodeBlockTheme)
+  observer.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ['class']
+  })
+})
+</script></li>
 <li>
 <p><strong>Crear tu Primer Artículo</strong><br>
 Genera un archivo de contenido:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">hugo new posts/mi-primer-articulo.md
-</span></span></code></pre></div><p>Edita el archivo creado en <code>content/posts/mi-primer-articulo.md</code> y agrega contenido relevante.</p>
+
+<div class="highlight"><pre tabindex="0" class="chroma-custom"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">hugo new posts/mi-primer-articulo.md</span></span></code></pre></div>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const updateCodeBlockTheme = () => {
+    const isDark = document.documentElement.classList.contains('dark')
+    const codeBlocks = document.querySelectorAll('.chroma-custom, .chroma-custom-dark')
+    codeBlocks.forEach(block => {
+      block.classList.remove('chroma-custom', 'chroma-custom-dark')
+      block.classList.add(isDark ? 'chroma-custom-dark' : 'chroma-custom')
+    })
+  }
+
+  updateCodeBlockTheme()
+
+  const observer = new MutationObserver(updateCodeBlockTheme)
+  observer.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ['class']
+  })
+})
+</script><p>Edita el archivo creado en <code>content/posts/mi-primer-articulo.md</code> y agrega contenido relevante.</p>
 </li>
 <li>
 <p><strong>Previsualizar el Blog Localmente</strong><br>
 Inicia el servidor de desarrollo para ver tu blog en el navegador:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">hugo server
-</span></span></code></pre></div><p>Abre <code>http://localhost:1313</code> en tu navegador para ver tu blog.</p>
+
+<div class="highlight"><pre tabindex="0" class="chroma-custom"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">hugo server</span></span></code></pre></div>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const updateCodeBlockTheme = () => {
+    const isDark = document.documentElement.classList.contains('dark')
+    const codeBlocks = document.querySelectorAll('.chroma-custom, .chroma-custom-dark')
+    codeBlocks.forEach(block => {
+      block.classList.remove('chroma-custom', 'chroma-custom-dark')
+      block.classList.add(isDark ? 'chroma-custom-dark' : 'chroma-custom')
+    })
+  }
+
+  updateCodeBlockTheme()
+
+  const observer = new MutationObserver(updateCodeBlockTheme)
+  observer.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ['class']
+  })
+})
+</script><p>Abre <code>http://localhost:1313</code> en tu navegador para ver tu blog.</p>
 </li>
 </ol>
 
@@ -922,20 +1001,60 @@ Ve a GitHub y crea un nuevo repositorio. Anota la URL del repositorio.</p>
 <li>
 <p><strong>Configurar el Repositorio Local</strong><br>
 Conecta tu proyecto a GitHub:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">git remote add origin https://github.com/&lt;tu-usuario&gt;/&lt;repositorio&gt;.git
-</span></span></code></pre></div></li>
+
+<div class="highlight"><pre tabindex="0" class="chroma-custom"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">git remote add origin https://github.com/&lt;tu-usuario&gt;/&lt;repositorio&gt;.git</span></span></code></pre></div>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const updateCodeBlockTheme = () => {
+    const isDark = document.documentElement.classList.contains('dark')
+    const codeBlocks = document.querySelectorAll('.chroma-custom, .chroma-custom-dark')
+    codeBlocks.forEach(block => {
+      block.classList.remove('chroma-custom', 'chroma-custom-dark')
+      block.classList.add(isDark ? 'chroma-custom-dark' : 'chroma-custom')
+    })
+  }
+
+  updateCodeBlockTheme()
+
+  const observer = new MutationObserver(updateCodeBlockTheme)
+  observer.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ['class']
+  })
+})
+</script></li>
 <li>
 <p><strong>Configurar la Rama para Publicación</strong><br>
 Hugo genera los archivos del sitio estático en el directorio <code>public</code>. Configuraremos esta carpeta como la rama <code>gh-pages</code>:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">hugo
+
+<div class="highlight"><pre tabindex="0" class="chroma-custom"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">hugo
 </span></span><span class="line"><span class="cl"><span class="nb">cd</span> public
 </span></span><span class="line"><span class="cl">git init
 </span></span><span class="line"><span class="cl">git remote add origin https://github.com/&lt;tu-usuario&gt;/&lt;repositorio&gt;.git
 </span></span><span class="line"><span class="cl">git checkout -b gh-pages
 </span></span><span class="line"><span class="cl">git add .
 </span></span><span class="line"><span class="cl">git commit -m <span class="s2">&#34;Publicar sitio inicial&#34;</span>
-</span></span><span class="line"><span class="cl">git push origin gh-pages --force
-</span></span></code></pre></div></li>
+</span></span><span class="line"><span class="cl">git push origin gh-pages --force</span></span></code></pre></div>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const updateCodeBlockTheme = () => {
+    const isDark = document.documentElement.classList.contains('dark')
+    const codeBlocks = document.querySelectorAll('.chroma-custom, .chroma-custom-dark')
+    codeBlocks.forEach(block => {
+      block.classList.remove('chroma-custom', 'chroma-custom-dark')
+      block.classList.add(isDark ? 'chroma-custom-dark' : 'chroma-custom')
+    })
+  }
+
+  updateCodeBlockTheme()
+
+  const observer = new MutationObserver(updateCodeBlockTheme)
+  observer.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ['class']
+  })
+})
+</script></li>
 <li>
 <p><strong>Configurar GitHub Pages</strong><br>
 Ve a la configuración del repositorio en GitHub, selecciona <strong>Pages</strong>, y elige la rama <code>gh-pages</code> como fuente.</p>
@@ -945,7 +1064,8 @@ Ve a la configuración del repositorio en GitHub, selecciona <strong>Pages</stro
 Puedes configurar GitHub Actions para automatizar la publicación cada vez que hagas un cambio:</p>
 <ul>
 <li>Crea un archivo <code>.github/workflows/deploy.yml</code>:
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Deploy Hugo Site</span><span class="w">
+
+<div class="highlight"><pre tabindex="0" class="chroma-custom"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Deploy Hugo Site</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">on</span><span class="p">:</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">push</span><span class="p">:</span><span class="w">
@@ -969,8 +1089,27 @@ Puedes configurar GitHub Actions para automatizar la publicación cada vez que h
 </span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l">peaceiris/actions-gh-pages@v3</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">with</span><span class="p">:</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">github_token</span><span class="p">:</span><span class="w"> </span><span class="l">${{ secrets.GITHUB_TOKEN }}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">publish_dir</span><span class="p">:</span><span class="w"> </span><span class="l">./public</span><span class="w">
-</span></span></span></code></pre></div></li>
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">publish_dir</span><span class="p">:</span><span class="w"> </span><span class="l">./public</span></span></span></code></pre></div>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const updateCodeBlockTheme = () => {
+    const isDark = document.documentElement.classList.contains('dark')
+    const codeBlocks = document.querySelectorAll('.chroma-custom, .chroma-custom-dark')
+    codeBlocks.forEach(block => {
+      block.classList.remove('chroma-custom', 'chroma-custom-dark')
+      block.classList.add(isDark ? 'chroma-custom-dark' : 'chroma-custom')
+    })
+  }
+
+  updateCodeBlockTheme()
+
+  const observer = new MutationObserver(updateCodeBlockTheme)
+  observer.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ['class']
+  })
+})
+</script></li>
 <li>Realiza un commit y haz un push del archivo.</li>
 </ul>
 </li>
@@ -1006,29 +1145,109 @@ Ve a GitHub y crea un repositorio con el nombre exacto <code>&lt;User&gt;.github
 <li>
 <p><strong>Configurar el Submódulo para <code>public</code></strong><br>
 Desde la raíz de tu proyecto Hugo, añade el repositorio como submódulo vinculado a la carpeta <code>public</code>:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">git submodule add -b main https://github.com/&lt;User&gt;/&lt;User&gt;.github.io.git public
-</span></span></code></pre></div></li>
+
+<div class="highlight"><pre tabindex="0" class="chroma-custom"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">git submodule add -b main https://github.com/&lt;User&gt;/&lt;User&gt;.github.io.git public</span></span></code></pre></div>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const updateCodeBlockTheme = () => {
+    const isDark = document.documentElement.classList.contains('dark')
+    const codeBlocks = document.querySelectorAll('.chroma-custom, .chroma-custom-dark')
+    codeBlocks.forEach(block => {
+      block.classList.remove('chroma-custom', 'chroma-custom-dark')
+      block.classList.add(isDark ? 'chroma-custom-dark' : 'chroma-custom')
+    })
+  }
+
+  updateCodeBlockTheme()
+
+  const observer = new MutationObserver(updateCodeBlockTheme)
+  observer.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ['class']
+  })
+})
+</script></li>
 <li>
 <p><strong>Generar el Sitio Estático</strong><br>
 Construye el sitio estático de Hugo, que generará los archivos en la carpeta <code>public</code>:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">hugo
-</span></span></code></pre></div></li>
+
+<div class="highlight"><pre tabindex="0" class="chroma-custom"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">hugo</span></span></code></pre></div>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const updateCodeBlockTheme = () => {
+    const isDark = document.documentElement.classList.contains('dark')
+    const codeBlocks = document.querySelectorAll('.chroma-custom, .chroma-custom-dark')
+    codeBlocks.forEach(block => {
+      block.classList.remove('chroma-custom', 'chroma-custom-dark')
+      block.classList.add(isDark ? 'chroma-custom-dark' : 'chroma-custom')
+    })
+  }
+
+  updateCodeBlockTheme()
+
+  const observer = new MutationObserver(updateCodeBlockTheme)
+  observer.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ['class']
+  })
+})
+</script></li>
 <li>
 <p><strong>Publicar los Archivos en <code>&lt;User&gt;.github.io</code></strong><br>
 Navega a la carpeta <code>public</code>, agrega y realiza un commit de los archivos generados, y luego súbelos al repositorio remoto:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">cd</span> public
+
+<div class="highlight"><pre tabindex="0" class="chroma-custom"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">cd</span> public
 </span></span><span class="line"><span class="cl">git add .
 </span></span><span class="line"><span class="cl">git commit -m <span class="s2">&#34;Publicar sitio inicial&#34;</span>
 </span></span><span class="line"><span class="cl">git push origin main
-</span></span><span class="line"><span class="cl"><span class="nb">cd</span> ..
-</span></span></code></pre></div></li>
+</span></span><span class="line"><span class="cl"><span class="nb">cd</span> ..</span></span></code></pre></div>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const updateCodeBlockTheme = () => {
+    const isDark = document.documentElement.classList.contains('dark')
+    const codeBlocks = document.querySelectorAll('.chroma-custom, .chroma-custom-dark')
+    codeBlocks.forEach(block => {
+      block.classList.remove('chroma-custom', 'chroma-custom-dark')
+      block.classList.add(isDark ? 'chroma-custom-dark' : 'chroma-custom')
+    })
+  }
+
+  updateCodeBlockTheme()
+
+  const observer = new MutationObserver(updateCodeBlockTheme)
+  observer.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ['class']
+  })
+})
+</script></li>
 <li>
 <p><strong>Guardar el Código Fuente del Blog</strong><br>
 Vuelve al repositorio principal (el directorio raíz de tu proyecto Hugo) y realiza un commit de los cambios relacionados con el submódulo:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">git add .
+
+<div class="highlight"><pre tabindex="0" class="chroma-custom"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">git add .
 </span></span><span class="line"><span class="cl">git commit -m <span class="s2">&#34;Configurar submódulo para publicar en GitHub Pages&#34;</span>
-</span></span><span class="line"><span class="cl">git push origin main
-</span></span></code></pre></div></li>
+</span></span><span class="line"><span class="cl">git push origin main</span></span></code></pre></div>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const updateCodeBlockTheme = () => {
+    const isDark = document.documentElement.classList.contains('dark')
+    const codeBlocks = document.querySelectorAll('.chroma-custom, .chroma-custom-dark')
+    codeBlocks.forEach(block => {
+      block.classList.remove('chroma-custom', 'chroma-custom-dark')
+      block.classList.add(isDark ? 'chroma-custom-dark' : 'chroma-custom')
+    })
+  }
+
+  updateCodeBlockTheme()
+
+  const observer = new MutationObserver(updateCodeBlockTheme)
+  observer.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ['class']
+  })
+})
+</script></li>
 <li>
 <p><strong>Configurar GitHub Pages</strong><br>
 GitHub detectará automáticamente el contenido publicado en el repositorio <code>&lt;User&gt;.github.io</code> y lo servirá desde <code>https://&lt;User&gt;.github.io</code>.</p>
