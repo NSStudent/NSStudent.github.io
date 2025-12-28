@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Bitboard on NSStudent blog</title>
+    <link>https://nsstudent.dev/tags/bitboard/</link>
+    <description>Recent content in Bitboard on NSStudent blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>es</language>
+    <copyright>© 2025 NSStudent</copyright>
+    <lastBuildDate>Sun, 28 Dec 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://nsstudent.dev/tags/bitboard/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Bitboards: Representando el tablero de ajedrez de forma eficiente</title>
+      <link>https://nsstudent.dev/posts/1766836145577-swift-chess-01/</link>
+      <pubDate>Sun, 28 Dec 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://nsstudent.dev/posts/1766836145577-swift-chess-01/</guid>
+      <description></description>
+      <media:content xmlns:media="http://search.yahoo.com/mrss/" url="https://nsstudent.dev/posts/1766836145577-swift-chess-01/featured.es.png" />
+    </item>
+    
+  </channel>
+</rss>

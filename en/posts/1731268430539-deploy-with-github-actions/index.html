@@ -110,8 +110,8 @@
   <link
     type="text/css"
     rel="stylesheet"
-    href="/css/main.bundle.min.0db745f34898a0185f344878c8a5eec0954ac26f1c6c10e683f473f112fc5c496894332c69918e39d9970354e30395ccf72947e45c90513f72648dd24a4d1a99.css"
-    integrity="sha512-DbdF80iYoBhfNEh4yKXuwJVKwm8cbBDmg/Rz8RL8XElolDMsaZGOOdmXA1TjA5XM9ylH5FyQUT9yZI3SSk0amQ==">
+    href="/css/main.bundle.min.d74516bf533e600cdf259b57cb1f0b778adce8fd37a6605ea07e09b38d5d92cc2d410d5875d0658d3d94488a81e77e8048dceb048e7dc52483c9efd64c71d6dc.css"
+    integrity="sha512-10UWv1M&#43;YAzfJZtXyx8Ld4rc6P03pmBeoH4Js41dkswtQQ1YddBljT2USIqB536ASNzrBI59xSSDye/WTHHW3A==">
 
   
   
@@ -144,6 +144,9 @@
     
   
   
+    
+  
+  
   
   
   
@@ -154,8 +157,8 @@
       defer
       type="text/javascript"
       id="script-bundle"
-      src="/js/main.bundle.min.9df4fc14d50efcc9aa4cfc2b6f348e365f421f5ad491278f8f48c0360cf2f93f08882fda6da162d7ace8e5add57c2df4ac46bd3861306b1d4c452cd31f448d64.js"
-      integrity="sha512-nfT8FNUO/MmqTPwrbzSONl9CH1rUkSePj0jANgzy&#43;T8IiC/abaFi16zo5a3VfC30rEa9OGEwax1MRSzTH0SNZA=="
+      src="/js/main.bundle.min.f37a623c7cde7366ca7d3c8e899e21e75456b529560d24062c75394b3e5e41d1c4314de6d8ec7c07f6d8023d56fd3dfa4f4615767c2b357ba82fb60594991112.js"
+      integrity="sha512-83piPHzec2bKfTyOiZ4h51RWtSlWDSQGLHU5Sz5eQdHEMU3m2Ox8B/bYAj1W/T36T0YVdnwrNXuoL7YFlJkREg=="
       data-copy="Copy"
       data-copied="Copied"></script>
   
@@ -204,6 +207,9 @@
 
 
 
+
+
+
   
   
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -221,7 +227,6 @@
     "name": "Deploy Publish blog with Github Actions",
     "headline": "Deploy Publish blog with Github Actions",
     "description": "Use GitHub deploy method and Github Actions to deploy in your server.",
-    
     "inLanguage": "en",
     "url" : "https://nsstudent.dev/en/posts/1731268430539-deploy-with-github-actions/",
     "author" : {
@@ -246,6 +251,29 @@
   
   
     
+
+
+
+  <script
+  async
+  src="https://cdn.seline.so/seline.js"
+  data-token="c5d833c6f041aef"
+  data-id="seline-script"></script>
+
+
+  <script type="text/javascript">
+    document.querySelector('script[data-id="seline-script"]').addEventListener("load", function () {
+      const type = document.head.querySelector('meta[property = "og:type"]').getAttribute("content");
+      let title = document.head.querySelector('meta[property = "og:title"]').getAttribute("content");
+      let url = document.head.querySelector('meta[property = "og:url"]').getAttribute("content");
+
+      seline.track("user:" + type + ":" + title, {
+        type: type,
+        title: title,
+        url: url,
+      });
+    });
+  </script>
 
 
 
@@ -957,13 +985,7 @@
     </span>
     
 </h2>
-<p><a
-  href="https://github.com/JohnSundell/Publish"
-    target="_blank"
-  >Publish</a> is an awesome static site generator created by <a
-  href="https://x.com/johnsundell"
-    target="_blank"
-  >John Sundell</a>. This website is built with this tool.</p>
+<p><a href="https://github.com/JohnSundell/Publish"  target="_blank">Publish</a> is an awesome static site generator created by <a href="https://x.com/johnsundell"  target="_blank">John Sundell</a>. This website is built with this tool.</p>
 <p>One of the steps is to upload to the server all the file generated, the first approach I used was to upload all the files in the output folder, via FTP manually but, then I had an idea.</p>
 
 <h2 class="relative group">Deploy
@@ -976,21 +998,21 @@
     
 </h2>
 <p>For deployment, I use the following code:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-swift" data-lang="swift"><span class="line"><span class="cl"><span class="p">.</span><span class="n">publish</span><span class="p">(</span>
+<div class="highlight-wrapper"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-swift" data-lang="swift"><span class="line"><span class="cl"><span class="p">.</span><span class="n">publish</span><span class="p">(</span>
 </span></span><span class="line"><span class="cl">        <span class="n">withTheme</span><span class="p">:</span> <span class="p">.</span><span class="n">nsstudent</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">        <span class="n">deployedUsing</span><span class="p">:</span> <span class="n">DeploymentMethod</span><span class="p">.</span><span class="n">gitHub</span><span class="p">(</span><span class="s">&#34;NSStudent/NSStudent&#34;</span><span class="p">),</span>
 </span></span><span class="line"><span class="cl"><span class="p">...</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><p>This is the implementation of the <code>github</code> method:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-swift" data-lang="swift"><span class="line"><span class="cl"><span class="c1">/// Deploy a website to a given GitHub repository.</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div></div>
+<p>This is the implementation of the <code>github</code> method:</p>
+<div class="highlight-wrapper"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-swift" data-lang="swift"><span class="line"><span class="cl"><span class="c1">/// Deploy a website to a given GitHub repository.</span>
 </span></span><span class="line"><span class="cl">    <span class="c1">/// - parameter repository: The full name of the repository (including its username).</span>
 </span></span><span class="line"><span class="cl">    <span class="c1">/// - parameter useSSH: Whether an SSH connection should be used (preferred).</span>
 </span></span><span class="line"><span class="cl">    <span class="kd">static</span> <span class="kd">func</span> <span class="nf">gitHub</span><span class="p">(</span><span class="kc">_</span> <span class="n">repository</span><span class="p">:</span> <span class="nb">String</span><span class="p">,</span> <span class="n">useSSH</span><span class="p">:</span> <span class="nb">Bool</span> <span class="p">=</span> <span class="kc">true</span><span class="p">)</span> <span class="p">-&gt;</span> <span class="kc">Self</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">        <span class="kd">let</span> <span class="nv">prefix</span> <span class="p">=</span> <span class="n">useSSH</span> <span class="p">?</span> <span class="s">&#34;git@github.com:&#34;</span> <span class="p">:</span> <span class="s">&#34;https://github.com/&#34;</span>
 </span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">git</span><span class="p">(</span><span class="s">&#34;</span><span class="si">\(</span><span class="kr">prefix</span><span class="si">)\(</span><span class="n">repository</span><span class="si">)</span><span class="s">.git&#34;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span></code></pre></div><p>This method searches the repository with the name <code>NSStudent/NSStudent</code>.  By default, the implementation tries to clone the repository via SSH with this code inside the <code>git</code> method.</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-swift" data-lang="swift"><span class="line"><span class="cl"><span class="kd">static</span> <span class="kd">func</span> <span class="nf">git</span><span class="p">(</span><span class="kc">_</span> <span class="n">remote</span><span class="p">:</span> <span class="nb">String</span><span class="p">)</span> <span class="p">-&gt;</span> <span class="kc">Self</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span></span></span></code></pre></div></div>
+<p>This method searches the repository with the name <code>NSStudent/NSStudent</code>.  By default, the implementation tries to clone the repository via SSH with this code inside the <code>git</code> method.</p>
+<div class="highlight-wrapper"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-swift" data-lang="swift"><span class="line"><span class="cl"><span class="kd">static</span> <span class="kd">func</span> <span class="nf">git</span><span class="p">(</span><span class="kc">_</span> <span class="n">remote</span><span class="p">:</span> <span class="nb">String</span><span class="p">)</span> <span class="p">-&gt;</span> <span class="kc">Self</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">        <span class="n">DeploymentMethod</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="s">&#34;Git (</span><span class="si">\(</span><span class="n">remote</span><span class="si">)</span><span class="s">)&#34;</span><span class="p">)</span> <span class="p">{</span> <span class="n">context</span> <span class="k">in</span>
 </span></span><span class="line"><span class="cl">            <span class="kd">let</span> <span class="nv">folder</span> <span class="p">=</span> <span class="k">try</span> <span class="n">context</span><span class="p">.</span><span class="n">createDeploymentFolder</span><span class="p">(</span><span class="n">withPrefix</span><span class="p">:</span> <span class="s">&#34;Git&#34;</span><span class="p">)</span> <span class="p">{</span> <span class="n">folder</span> <span class="k">in</span>
 </span></span><span class="line"><span class="cl">                <span class="k">if</span> <span class="o">!</span><span class="n">folder</span><span class="p">.</span><span class="n">containsSubfolder</span><span class="p">(</span><span class="n">named</span><span class="p">:</span> <span class="s">&#34;.git&#34;</span><span class="p">)</span> <span class="p">{</span>
@@ -1037,11 +1059,11 @@
 </span></span><span class="line"><span class="cl">                <span class="k">throw</span> <span class="n">error</span>
 </span></span><span class="line"><span class="cl">            <span class="p">}</span>
 </span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span></code></pre></div><p>The magic happens when the <code>context</code> calls <code>context.createDeploymentFolder </code> function. This method creates a new folder with the name <code>GitDeploy</code>  inside to a hidden folder <code>.publish</code>.</p>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span></span></span></code></pre></div></div>
+<p>The magic happens when the <code>context</code> calls <code>context.createDeploymentFolder </code> function. This method creates a new folder with the name <code>GitDeploy</code>  inside to a hidden folder <code>.publish</code>.</p>
 <p>Right now, all the codes are in your repository.</p>
 <p>To create the action to upload the website in the server via FTP, you need to add the following <code>main.yml</code> file:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">name: Deploy website
+<div class="highlight-wrapper"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">name: Deploy website
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">on: <span class="o">[</span>push<span class="o">]</span>
 </span></span><span class="line"><span class="cl">
@@ -1057,18 +1079,10 @@
 </span></span><span class="line"><span class="cl">        FTP_SERVER: <span class="si">${</span><span class="p">{ secrets.FTP_NAME </span><span class="si">}</span><span class="o">}</span>
 </span></span><span class="line"><span class="cl">        FTP_USERNAME: <span class="si">${</span><span class="p">{ secrets.FTP_USER </span><span class="si">}</span><span class="o">}</span>
 </span></span><span class="line"><span class="cl">        FTP_PASSWORD: <span class="si">${</span><span class="p">{ secrets.FTP_PASSWORD </span><span class="si">}</span><span class="o">}</span>
-</span></span><span class="line"><span class="cl">        ARGS: --delete --exclude-glob<span class="o">=</span>.git*/** --exclude-glob<span class="o">=</span>.git** --delete-excluded
-</span></span></code></pre></div><p>This file use the <a
-  href="https://github.com/SamKirkland/FTP-Deploy-Action"
-    target="_blank"
-  >FTP-Deploy-Action</a>. It has three secrets variables <code>secrets.FTP_NAME</code>, <code>secrets.FTP_USER</code>, <code>secrets.FTP_PASSWORD</code> to not expose the real values. The <code>ARGS</code> parameter tries to remove all unused files and it prevents the upload off all the files inside the <code>.git</code> or <code>.github</code> folders.</p>
-<blockquote>
-<p>You need to pull this change in the current <code>GitDeploy</code> repository. Right now, every time you use <code>Publish deploy</code> in the terminal and push a new version in this repository, the action uploads all the files to the FTP.</p>
-</blockquote>
-<p>I will try to write with new things about <a
-  href="https://github.com/JohnSundell/Publish"
-    target="_blank"
-  >Publish</a> and how I use them in this blog.</p>
+</span></span><span class="line"><span class="cl">        ARGS: --delete --exclude-glob<span class="o">=</span>.git*/** --exclude-glob<span class="o">=</span>.git** --delete-excluded</span></span></code></pre></div></div>
+<p>This file use the <a href="https://github.com/SamKirkland/FTP-Deploy-Action"  target="_blank">FTP-Deploy-Action</a>. It has three secrets variables <code>secrets.FTP_NAME</code>, <code>secrets.FTP_USER</code>, <code>secrets.FTP_PASSWORD</code> to not expose the real values. The <code>ARGS</code> parameter tries to remove all unused files and it prevents the upload off all the files inside the <code>.git</code> or <code>.github</code> folders.</p>
+<blockquote ><p>You need to pull this change in the current <code>GitDeploy</code> repository. Right now, every time you use <code>Publish deploy</code> in the terminal and push a new version in this repository, the action uploads all the files to the FTP.</p>
+</blockquote><p>I will try to write with new things about <a href="https://github.com/JohnSundell/Publish"  target="_blank">Publish</a> and how I use them in this blog.</p>
 
           
           
@@ -1128,6 +1142,19 @@
           
         </span>
         <span class="flex flex-col items-end">
+          
+            <a
+              class="flex text-right text-neutral-700 hover:text-primary-600 dark:text-neutral dark:hover:text-primary-400"
+              href="/en/posts/1766836145577-swift-chess-01/">
+              <span class="leading-6">
+                Bitboards: Representing the Chessboard Efficiently&ensp;<span class="inline-block rtl:rotate-180">&rarr;</span>
+              </span>
+            </a>
+            
+              <span class="me-6 mt-1 text-xs text-neutral-500 dark:text-neutral-400">
+                <time datetime="2025-12-27T00:00:00&#43;00:00">27 December 2025</time>
+              </span>
+            
           
         </span>
       </div>

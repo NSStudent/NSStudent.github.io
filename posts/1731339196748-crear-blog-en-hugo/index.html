@@ -112,8 +112,8 @@
   <link
     type="text/css"
     rel="stylesheet"
-    href="/css/main.bundle.min.0db745f34898a0185f344878c8a5eec0954ac26f1c6c10e683f473f112fc5c496894332c69918e39d9970354e30395ccf72947e45c90513f72648dd24a4d1a99.css"
-    integrity="sha512-DbdF80iYoBhfNEh4yKXuwJVKwm8cbBDmg/Rz8RL8XElolDMsaZGOOdmXA1TjA5XM9ylH5FyQUT9yZI3SSk0amQ==">
+    href="/css/main.bundle.min.d74516bf533e600cdf259b57cb1f0b778adce8fd37a6605ea07e09b38d5d92cc2d410d5875d0658d3d94488a81e77e8048dceb048e7dc52483c9efd64c71d6dc.css"
+    integrity="sha512-10UWv1M&#43;YAzfJZtXyx8Ld4rc6P03pmBeoH4Js41dkswtQQ1YddBljT2USIqB536ASNzrBI59xSSDye/WTHHW3A==">
 
   
   
@@ -146,6 +146,9 @@
     
   
   
+    
+  
+  
   
   
   
@@ -156,8 +159,8 @@
       defer
       type="text/javascript"
       id="script-bundle"
-      src="/js/main.bundle.min.9df4fc14d50efcc9aa4cfc2b6f348e365f421f5ad491278f8f48c0360cf2f93f08882fda6da162d7ace8e5add57c2df4ac46bd3861306b1d4c452cd31f448d64.js"
-      integrity="sha512-nfT8FNUO/MmqTPwrbzSONl9CH1rUkSePj0jANgzy&#43;T8IiC/abaFi16zo5a3VfC30rEa9OGEwax1MRSzTH0SNZA=="
+      src="/js/main.bundle.min.f37a623c7cde7366ca7d3c8e899e21e75456b529560d24062c75394b3e5e41d1c4314de6d8ec7c07f6d8023d56fd3dfa4f4615767c2b357ba82fb60594991112.js"
+      integrity="sha512-83piPHzec2bKfTyOiZ4h51RWtSlWDSQGLHU5Sz5eQdHEMU3m2Ox8B/bYAj1W/T36T0YVdnwrNXuoL7YFlJkREg=="
       data-copy="Copiar"
       data-copied="Copiado"></script>
   
@@ -206,6 +209,9 @@
 
 
 
+
+
+
   
   
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -223,7 +229,6 @@
     "name": "Crear un Blog con Hugo y Publicarlo en GitHub Pages",
     "headline": "Crear un Blog con Hugo y Publicarlo en GitHub Pages",
     "description": "Guía paso a paso para crear un blog con Hugo y publicarlo en GitHub Pages.",
-    
     "inLanguage": "es",
     "url" : "https://nsstudent.dev/posts/1731339196748-crear-blog-en-hugo/",
     "author" : {
@@ -248,6 +253,29 @@
   
   
     
+
+
+
+  <script
+  async
+  src="https://cdn.seline.so/seline.js"
+  data-token="c5d833c6f041aef"
+  data-id="seline-script"></script>
+
+
+  <script type="text/javascript">
+    document.querySelector('script[data-id="seline-script"]').addEventListener("load", function () {
+      const type = document.head.querySelector('meta[property = "og:type"]').getAttribute("content");
+      let title = document.head.querySelector('meta[property = "og:title"]').getAttribute("content");
+      let url = document.head.querySelector('meta[property = "og:url"]').getAttribute("content");
+
+      seline.track("user:" + type + ":" + title, {
+        type: type,
+        title: title,
+        url: url,
+      });
+    });
+  </script>
 
 
 
@@ -1010,18 +1038,9 @@
 </h2>
 <p>Antes de comenzar, asegúrate de tener lo siguiente:</p>
 <ul>
-<li><a
-  href="https://git-scm.com/"
-    target="_blank"
-  >Git</a> instalado en tu máquina.</li>
-<li><a
-  href="https://gohugo.io/"
-    target="_blank"
-  >Hugo</a> instalado.</li>
-<li>Una cuenta en <a
-  href="https://github.com/"
-    target="_blank"
-  >GitHub</a>.</li>
+<li><a href="https://git-scm.com/"  target="_blank">Git</a> instalado en tu máquina.</li>
+<li><a href="https://gohugo.io/"  target="_blank">Hugo</a> instalado.</li>
+<li>Una cuenta en <a href="https://github.com/"  target="_blank">GitHub</a>.</li>
 </ul>
 
 <h2 class="relative group">Crear tu Blog con Hugo
@@ -1037,31 +1056,28 @@
 <li>
 <p><strong>Inicializar un Nuevo Proyecto de Hugo</strong><br>
 Crea un directorio para tu blog e inicializa el proyecto:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">mkdir MiBlog
+<div class="highlight-wrapper"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">mkdir MiBlog
 </span></span><span class="line"><span class="cl"><span class="nb">cd</span> MiBlog
-</span></span><span class="line"><span class="cl">hugo new site .
-</span></span></code></pre></div></li>
+</span></span><span class="line"><span class="cl">hugo new site .</span></span></code></pre></div></div>
+</li>
 <li>
 <p><strong>Elegir un Tema</strong><br>
-Busca un tema que te guste en <a
-  href="https://themes.gohugo.io/"
-    target="_blank"
-  >Hugo Themes</a> y clónalo en tu proyecto:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">git init
+Busca un tema que te guste en <a href="https://themes.gohugo.io/"  target="_blank">Hugo Themes</a> y clónalo en tu proyecto:</p>
+<div class="highlight-wrapper"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">git init
 </span></span><span class="line"><span class="cl">git submodule add https://github.com/&lt;autor&gt;/&lt;tema&gt;.git themes/&lt;tema&gt;
-</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s1">&#39;theme = &#34;&lt;tema&gt;&#34;&#39;</span> &gt;&gt; config.toml
-</span></span></code></pre></div></li>
+</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s1">&#39;theme = &#34;&lt;tema&gt;&#34;&#39;</span> &gt;&gt; config.toml</span></span></code></pre></div></div>
+</li>
 <li>
 <p><strong>Crear tu Primer Artículo</strong><br>
 Genera un archivo de contenido:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">hugo new posts/mi-primer-articulo.md
-</span></span></code></pre></div><p>Edita el archivo creado en <code>content/posts/mi-primer-articulo.md</code> y agrega contenido relevante.</p>
+<div class="highlight-wrapper"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">hugo new posts/mi-primer-articulo.md</span></span></code></pre></div></div>
+<p>Edita el archivo creado en <code>content/posts/mi-primer-articulo.md</code> y agrega contenido relevante.</p>
 </li>
 <li>
 <p><strong>Previsualizar el Blog Localmente</strong><br>
 Inicia el servidor de desarrollo para ver tu blog en el navegador:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">hugo server
-</span></span></code></pre></div><p>Abre <code>http://localhost:1313</code> en tu navegador para ver tu blog.</p>
+<div class="highlight-wrapper"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">hugo server</span></span></code></pre></div></div>
+<p>Abre <code>http://localhost:1313</code> en tu navegador para ver tu blog.</p>
 </li>
 </ol>
 
@@ -1082,20 +1098,20 @@ Ve a GitHub y crea un nuevo repositorio. Anota la URL del repositorio.</p>
 <li>
 <p><strong>Configurar el Repositorio Local</strong><br>
 Conecta tu proyecto a GitHub:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">git remote add origin https://github.com/&lt;tu-usuario&gt;/&lt;repositorio&gt;.git
-</span></span></code></pre></div></li>
+<div class="highlight-wrapper"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">git remote add origin https://github.com/&lt;tu-usuario&gt;/&lt;repositorio&gt;.git</span></span></code></pre></div></div>
+</li>
 <li>
 <p><strong>Configurar la Rama para Publicación</strong><br>
 Hugo genera los archivos del sitio estático en el directorio <code>public</code>. Configuraremos esta carpeta como la rama <code>gh-pages</code>:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">hugo
+<div class="highlight-wrapper"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">hugo
 </span></span><span class="line"><span class="cl"><span class="nb">cd</span> public
 </span></span><span class="line"><span class="cl">git init
 </span></span><span class="line"><span class="cl">git remote add origin https://github.com/&lt;tu-usuario&gt;/&lt;repositorio&gt;.git
 </span></span><span class="line"><span class="cl">git checkout -b gh-pages
 </span></span><span class="line"><span class="cl">git add .
 </span></span><span class="line"><span class="cl">git commit -m <span class="s2">&#34;Publicar sitio inicial&#34;</span>
-</span></span><span class="line"><span class="cl">git push origin gh-pages --force
-</span></span></code></pre></div></li>
+</span></span><span class="line"><span class="cl">git push origin gh-pages --force</span></span></code></pre></div></div>
+</li>
 <li>
 <p><strong>Configurar GitHub Pages</strong><br>
 Ve a la configuración del repositorio en GitHub, selecciona <strong>Pages</strong>, y elige la rama <code>gh-pages</code> como fuente.</p>
@@ -1105,7 +1121,7 @@ Ve a la configuración del repositorio en GitHub, selecciona <strong>Pages</stro
 Puedes configurar GitHub Actions para automatizar la publicación cada vez que hagas un cambio:</p>
 <ul>
 <li>Crea un archivo <code>.github/workflows/deploy.yml</code>:
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Deploy Hugo Site</span><span class="w">
+<div class="highlight-wrapper"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Deploy Hugo Site</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">on</span><span class="p">:</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">push</span><span class="p">:</span><span class="w">
@@ -1129,8 +1145,8 @@ Puedes configurar GitHub Actions para automatizar la publicación cada vez que h
 </span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l">peaceiris/actions-gh-pages@v3</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">with</span><span class="p">:</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">github_token</span><span class="p">:</span><span class="w"> </span><span class="l">${{ secrets.GITHUB_TOKEN }}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">publish_dir</span><span class="p">:</span><span class="w"> </span><span class="l">./public</span><span class="w">
-</span></span></span></code></pre></div></li>
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">publish_dir</span><span class="p">:</span><span class="w"> </span><span class="l">./public</span></span></span></code></pre></div></div>
+</li>
 <li>Realiza un commit y haz un push del archivo.</li>
 </ul>
 </li>
@@ -1164,29 +1180,29 @@ Ve a GitHub y crea un repositorio con el nombre exacto <code>&lt;User&gt;.github
 <li>
 <p><strong>Configurar el Submódulo para <code>public</code></strong><br>
 Desde la raíz de tu proyecto Hugo, añade el repositorio como submódulo vinculado a la carpeta <code>public</code>:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">git submodule add -b main https://github.com/&lt;User&gt;/&lt;User&gt;.github.io.git public
-</span></span></code></pre></div></li>
+<div class="highlight-wrapper"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">git submodule add -b main https://github.com/&lt;User&gt;/&lt;User&gt;.github.io.git public</span></span></code></pre></div></div>
+</li>
 <li>
 <p><strong>Generar el Sitio Estático</strong><br>
 Construye el sitio estático de Hugo, que generará los archivos en la carpeta <code>public</code>:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">hugo
-</span></span></code></pre></div></li>
+<div class="highlight-wrapper"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">hugo</span></span></code></pre></div></div>
+</li>
 <li>
 <p><strong>Publicar los Archivos en <code>&lt;User&gt;.github.io</code></strong><br>
 Navega a la carpeta <code>public</code>, agrega y realiza un commit de los archivos generados, y luego súbelos al repositorio remoto:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">cd</span> public
+<div class="highlight-wrapper"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">cd</span> public
 </span></span><span class="line"><span class="cl">git add .
 </span></span><span class="line"><span class="cl">git commit -m <span class="s2">&#34;Publicar sitio inicial&#34;</span>
 </span></span><span class="line"><span class="cl">git push origin main
-</span></span><span class="line"><span class="cl"><span class="nb">cd</span> ..
-</span></span></code></pre></div></li>
+</span></span><span class="line"><span class="cl"><span class="nb">cd</span> ..</span></span></code></pre></div></div>
+</li>
 <li>
 <p><strong>Guardar el Código Fuente del Blog</strong><br>
 Vuelve al repositorio principal (el directorio raíz de tu proyecto Hugo) y realiza un commit de los cambios relacionados con el submódulo:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">git add .
+<div class="highlight-wrapper"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">git add .
 </span></span><span class="line"><span class="cl">git commit -m <span class="s2">&#34;Configurar submódulo para publicar en GitHub Pages&#34;</span>
-</span></span><span class="line"><span class="cl">git push origin main
-</span></span></code></pre></div></li>
+</span></span><span class="line"><span class="cl">git push origin main</span></span></code></pre></div></div>
+</li>
 <li>
 <p><strong>Configurar GitHub Pages</strong><br>
 GitHub detectará automáticamente el contenido publicado en el repositorio <code>&lt;User&gt;.github.io</code> y lo servirá desde <code>https://&lt;User&gt;.github.io</code>.</p>
@@ -1218,13 +1234,7 @@ GitHub detectará automáticamente el contenido publicado en el repositorio <cod
     </span>
     
 </h2>
-<p>¡Eso es todo! Ahora tienes un blog funcional en Hugo alojado gratuitamente en GitHub Pages. Puedes personalizarlo, agregar más artículos y compartir tu contenido con el mundo. Si necesitas más ayuda, consulta la documentación oficial de <a
-  href="https://gohugo.io/documentation/"
-    target="_blank"
-  >Hugo</a> y <a
-  href="https://pages.github.com/"
-    target="_blank"
-  >GitHub Pages</a>.</p>
+<p>¡Eso es todo! Ahora tienes un blog funcional en Hugo alojado gratuitamente en GitHub Pages. Puedes personalizarlo, agregar más artículos y compartir tu contenido con el mundo. Si necesitas más ayuda, consulta la documentación oficial de <a href="https://gohugo.io/documentation/"  target="_blank">Hugo</a> y <a href="https://pages.github.com/"  target="_blank">GitHub Pages</a>.</p>
 
           
           
@@ -1284,6 +1294,19 @@ GitHub detectará automáticamente el contenido publicado en el repositorio <cod
           
         </span>
         <span class="flex flex-col items-end">
+          
+            <a
+              class="flex text-right text-neutral-700 hover:text-primary-600 dark:text-neutral dark:hover:text-primary-400"
+              href="/posts/1766836145577-swift-chess-01/">
+              <span class="leading-6">
+                Bitboards: Representando el tablero de ajedrez de forma eficiente&ensp;<span class="inline-block rtl:rotate-180">&rarr;</span>
+              </span>
+            </a>
+            
+              <span class="me-6 mt-1 text-xs text-neutral-500 dark:text-neutral-400">
+                <time datetime="2025-12-28T00:00:00&#43;00:00">28 de diciembre de 2025</time>
+              </span>
+            
           
         </span>
       </div>

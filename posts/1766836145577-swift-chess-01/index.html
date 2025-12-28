@@ -1,0 +1,1283 @@
+<!doctype html>
+<html
+  lang="es"
+  dir="ltr"
+  class="scroll-smooth"
+  data-default-appearance="dark"
+  data-auto-appearance="true"><head>
+  <meta charset="utf-8">
+  
+    <meta http-equiv="content-language" content="es">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color">
+
+  
+  
+    <title>Bitboards: Representando el tablero de ajedrez de forma eficiente &middot; NSStudent blog</title>
+    <meta name="title" content="Bitboards: Representando el tablero de ajedrez de forma eficiente &middot; NSStudent blog">
+  
+
+  
+  
+    <meta name="description" content="En este artículo vamos a entrar en uno de los conceptos fundamentales de cualquier motor o librería de ajedrez moderna: los bitboards.">
+  
+  
+    <meta name="keywords" content="swift,ajedrez,bitboard,">
+  
+  
+  
+  <link rel="canonical" href="https://nsstudent.dev/posts/1766836145577-swift-chess-01/">
+  
+
+  
+  
+    <meta name="author" content="NSStudent">
+  
+  
+    
+      
+        
+          <link href="https://x.com/NSStudent" rel="me">
+        
+      
+    
+      
+        
+          <link href="https://github.com/NSStudent" rel="me">
+        
+      
+    
+  
+
+  
+  <meta property="og:url" content="https://nsstudent.dev/posts/1766836145577-swift-chess-01/">
+  <meta property="og:site_name" content="NSStudent blog">
+  <meta property="og:title" content="Bitboards: Representando el tablero de ajedrez de forma eficiente">
+  <meta property="og:description" content="En este artículo vamos a entrar en uno de los conceptos fundamentales de cualquier motor o librería de ajedrez moderna: los bitboards.">
+  <meta property="og:locale" content="es">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-12-28T00:00:00+00:00">
+    <meta property="article:modified_time" content="2025-12-28T00:00:00+00:00">
+    <meta property="article:tag" content="Swift">
+    <meta property="article:tag" content="Ajedrez">
+    <meta property="article:tag" content="Bitboard">
+    <meta property="og:image" content="https://nsstudent.dev/posts/1766836145577-swift-chess-01/featured.es.png">
+
+  
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://nsstudent.dev/posts/1766836145577-swift-chess-01/featured.es.png">
+  <meta name="twitter:title" content="Bitboards: Representando el tablero de ajedrez de forma eficiente">
+  <meta name="twitter:description" content="En este artículo vamos a entrar en uno de los conceptos fundamentales de cualquier motor o librería de ajedrez moderna: los bitboards.">
+
+  
+  
+  
+  
+    
+      
+    
+  
+    
+  
+    
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  
+  
+    
+  
+  
+    
+  
+  
+  <link
+    type="text/css"
+    rel="stylesheet"
+    href="/css/main.bundle.min.d74516bf533e600cdf259b57cb1f0b778adce8fd37a6605ea07e09b38d5d92cc2d410d5875d0658d3d94488a81e77e8048dceb048e7dc52483c9efd64c71d6dc.css"
+    integrity="sha512-10UWv1M&#43;YAzfJZtXyx8Ld4rc6P03pmBeoH4Js41dkswtQQ1YddBljT2USIqB536ASNzrBI59xSSDye/WTHHW3A==">
+
+  
+  
+  <script
+    type="text/javascript"
+    src="/js/appearance.min.2c0ab5506641879e1359d88634bba0e400a6bd9451a6eda64877780b06f2d5a03135c66f152c2d5e9c78433527d4862b44c22ef1d159307512784a83ef26f9fd.js"
+    integrity="sha512-LAq1UGZBh54TWdiGNLug5ACmvZRRpu2mSHd4Cwby1aAxNcZvFSwtXpx4QzUn1IYrRMIu8dFZMHUSeEqD7yb5/Q=="></script>
+  
+  
+  
+  
+  
+    
+    <script
+      type="text/javascript"
+      src="/js/zen-mode.min.9814dee9614d32aeb56239d118edfe20acd6231424f9b19c2dd48835038414130a5e946c0d1c9087d60e60e31840c9babfd217e3d4b95643dc8d651a71ccdf4a.js"
+      integrity="sha512-mBTe6WFNMq61YjnRGO3&#43;IKzWIxQk&#43;bGcLdSINQOEFBMKXpRsDRyQh9YOYOMYQMm6v9IX49S5VkPcjWUacczfSg=="></script>
+  
+  
+    
+    <script src="/lib/zoom/zoom.min.umd.a527109b68c082a70f3697716dd72a9d5aa8b545cf800cecbbc7399f2ca6f6e0ce3e431f2062b48bbfa47c9ea42822714060bef309be073f49b9c0e30d318d7b.js" integrity="sha512-pScQm2jAgqcPNpdxbdcqnVqotUXPgAzsu8c5nyym9uDOPkMfIGK0i7&#43;kfJ6kKCJxQGC&#43;8wm&#43;Bz9JucDjDTGNew=="></script>
+  
+
+  
+  
+  
+    
+  
+  
+    
+  
+  
+    
+  
+  
+  
+  
+  
+  
+  
+    
+    <script
+      defer
+      type="text/javascript"
+      id="script-bundle"
+      src="/js/main.bundle.min.f37a623c7cde7366ca7d3c8e899e21e75456b529560d24062c75394b3e5e41d1c4314de6d8ec7c07f6d8023d56fd3dfa4f4615767c2b357ba82fb60594991112.js"
+      integrity="sha512-83piPHzec2bKfTyOiZ4h51RWtSlWDSQGLHU5Sz5eQdHEMU3m2Ox8B/bYAj1W/T36T0YVdnwrNXuoL7YFlJkREg=="
+      data-copy="Copiar"
+      data-copied="Copiado"></script>
+  
+
+  
+  
+
+<script src="/lib/jquery/jquery.slim.min.b0dca576e87d7eaa5850ae4e61759c065786cdb6489d68fcc82240539eebd5da522bdb4fda085ffd245808c8fe2acb2516408eb774ef26b5f6015fc6737c0ea8.js" integrity="sha512-sNylduh9fqpYUK5OYXWcBleGzbZInWj8yCJAU57r1dpSK9tP2ghf/SRYCMj&#43;KsslFkCOt3TvJrX2AV/Gc3wOqA=="></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+
+
+
+  
+  
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+  
+
+  
+  <script type="application/ld+json">
+  [{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "articleSection": "Posts",
+    "name": "Bitboards: Representando el tablero de ajedrez de forma eficiente",
+    "headline": "Bitboards: Representando el tablero de ajedrez de forma eficiente",
+    "description": "En este artículo vamos a entrar en uno de los conceptos fundamentales de cualquier motor o librería de ajedrez moderna: los bitboards.",
+    "inLanguage": "es",
+    "url" : "https://nsstudent.dev/posts/1766836145577-swift-chess-01/",
+    "author" : {
+      "@type": "Person",
+      "name": "NSStudent"
+    },
+    "copyrightYear": "2025",
+    "dateCreated": "2025-12-28T00:00:00\u002b00:00",
+    "datePublished": "2025-12-28T00:00:00\u002b00:00",
+    
+    "dateModified": "2025-12-28T00:00:00\u002b00:00",
+    
+    "keywords": ["swift","ajedrez","bitboard"],
+    
+    "mainEntityOfPage": "true",
+    "wordCount": "1586"
+  }]
+  </script>
+
+
+
+  
+  
+    
+
+
+
+  <script
+  async
+  src="https://cdn.seline.so/seline.js"
+  data-token="c5d833c6f041aef"
+  data-id="seline-script"></script>
+
+
+  <script type="text/javascript">
+    document.querySelector('script[data-id="seline-script"]').addEventListener("load", function () {
+      const type = document.head.querySelector('meta[property = "og:type"]').getAttribute("content");
+      let title = document.head.querySelector('meta[property = "og:title"]').getAttribute("content");
+      let url = document.head.querySelector('meta[property = "og:url"]').getAttribute("content");
+
+      seline.track("user:" + type + ":" + title, {
+        type: type,
+        title: title,
+        url: url,
+      });
+    });
+  </script>
+
+
+
+
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+</head>
+
+
+
+
+
+
+
+  
+    
+  
+
+
+
+
+
+
+
+  
+    
+  
+
+
+
+
+
+
+  
+  
+  <body class="flex flex-col h-screen m-auto leading-7 max-w-7xl px-6 sm:px-14 md:px-24 lg:px-32 text-lg bg-neutral text-neutral-900 dark:bg-neutral-800 dark:text-neutral scrollbar-thin scrollbar-track-neutral-200 scrollbar-thumb-neutral-400 dark:scrollbar-track-neutral-800 dark:scrollbar-thumb-neutral-600">
+    <div id="the-top" class="absolute flex self-center">
+      <a
+        class="px-3 py-1 text-sm -translate-y-8 rounded-b-lg bg-primary-200 focus:translate-y-0 dark:bg-neutral-600"
+        href="#main-content">
+        <span class="font-bold text-primary-600 pe-2 dark:text-primary-400">&darr;</span>
+        Ir al contenido
+      </a>
+    </div>
+    
+    
+      <div class="min-h-[148px]"></div>
+<div class="fixed inset-x-0 z-100">
+  <div
+    id="menu-blur"
+    class="absolute opacity-0 inset-x-0 top-0 h-full single_hero_background nozoom bg-neutral dark:bg-neutral-800"></div>
+  <div class="relative m-auto leading-7 max-w-7xl px-6 sm:px-14 md:px-24 lg:px-32">
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div
+  class="main-menu flex items-center justify-between py-6 md:justify-start gap-x-3 pt-[2px] pr-2 md:pr-4 pb-[3px] pl-0">
+  
+  
+    
+    
+      <div>
+        <a href="/" class="flex">
+          <span class="sr-only">NSStudent blog</span>
+          
+            <img
+              src="/img/icon45.png"
+              width="45"
+              height="45"
+              class="logo max-h-[5rem] max-w-[5rem] object-scale-down object-left nozoom"
+              alt="">
+          
+        </a>
+      </div>
+    
+
+  <div class="flex flex-1 items-center justify-between">
+    <nav class="flex space-x-3">
+      
+        <a href="/" class="text-base font-medium">
+          NSStudent blog
+        </a>
+      
+    </nav>
+    
+  <nav class="hidden md:flex items-center gap-x-5 md:ml-12 h-12">
+    
+      
+        
+  <a
+  href="/"
+  
+  class="flex items-center hover:text-primary-600 dark:hover:text-primary-400"
+  aria-label="Home"
+  title="NSStudent blog">
+  
+  
+    <p class="text-base font-medium">
+      Home
+    </p>
+  
+</a>
+
+
+
+      
+        
+  <a
+  href="/posts/"
+  
+  class="flex items-center hover:text-primary-600 dark:hover:text-primary-400"
+  aria-label="Posts"
+  title="Posts">
+  
+  
+    <p class="text-base font-medium">
+      Posts
+    </p>
+  
+</a>
+
+
+
+      
+        
+  <a
+  href="/about/"
+  
+  class="flex items-center hover:text-primary-600 dark:hover:text-primary-400"
+  aria-label="Sobre mí"
+  title="">
+  
+  
+    <p class="text-base font-medium">
+      Sobre mí
+    </p>
+  
+</a>
+
+
+
+      
+        
+  <a
+  href=""
+  
+  class="flex items-center hover:text-primary-600 dark:hover:text-primary-400"
+  
+  title="">
+  
+  
+</a>
+
+
+
+      
+    
+
+    
+  <div>
+    <div class="cursor-pointer flex items-center nested-menu">
+      <span class="me-1">
+        <span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512">
+    <path fill="currentColor" d="M0 128C0 92.7 28.7 64 64 64H256h48 16H576c35.3 0 64 28.7 64 64V384c0 35.3-28.7 64-64 64H320 304 256 64c-35.3 0-64-28.7-64-64V128zm320 0V384H576V128H320zM178.3 175.9c-3.2-7.2-10.4-11.9-18.3-11.9s-15.1 4.7-18.3 11.9l-64 144c-4.5 10.1 .1 21.9 10.2 26.4s21.9-.1 26.4-10.2l8.9-20.1h73.6l8.9 20.1c4.5 10.1 16.3 14.6 26.4 10.2s14.6-16.3 10.2-26.4l-64-144zM160 233.2L179 276H141l19-42.8zM448 164c11 0 20 9 20 20v4h44 16c11 0 20 9 20 20s-9 20-20 20h-2l-1.6 4.5c-8.9 24.4-22.4 46.6-39.6 65.4c.9 .6 1.8 1.1 2.7 1.6l18.9 11.3c9.5 5.7 12.5 18 6.9 27.4s-18 12.5-27.4 6.9l-18.9-11.3c-4.5-2.7-8.8-5.5-13.1-8.5c-10.6 7.5-21.9 14-34 19.4l-3.6 1.6c-10.1 4.5-21.9-.1-26.4-10.2s.1-21.9 10.2-26.4l3.6-1.6c6.4-2.9 12.6-6.1 18.5-9.8l-12.2-12.2c-7.8-7.8-7.8-20.5 0-28.3s20.5-7.8 28.3 0l14.6 14.6 .5 .5c12.4-13.1 22.5-28.3 29.8-45H448 376c-11 0-20-9-20-20s9-20 20-20h52v-4c0-11 9-20 20-20z"/></svg></span>
+      </span>
+      <div
+        class="text-sm font-medium hover:text-primary-600 dark:hover:text-primary-400"
+        title="Bitboards: Representando el tablero de ajedrez de forma eficiente">ES</div>
+    </div>
+    <div class="absolute menuhide">
+      <div class="pt-2 p-5 mt-2 rounded-xl backdrop-blur shadow-2xl">
+        <div class="flex flex-col space-y-3">
+          
+            <a href="/posts/1766836145577-swift-chess-01/" class="flex items-center">
+              <p
+                class="text-sm font-sm hover:text-primary-600 dark:hover:text-primary-400"
+                title="Bitboards: Representando el tablero de ajedrez de forma eficiente">
+                Español
+              </p>
+            </a>
+          
+            <a href="/en/posts/1766836145577-swift-chess-01/" class="flex items-center">
+              <p
+                class="text-sm font-sm hover:text-primary-600 dark:hover:text-primary-400"
+                title="Bitboards: Representing the Chessboard Efficiently">
+                English
+              </p>
+            </a>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+    
+
+    
+      <button
+        id="search-button"
+        aria-label="Search"
+        class="text-base hover:text-primary-600 dark:hover:text-primary-400"
+        title="Buscar (/)">
+        <span class="relative block icon"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="search" class="svg-inline--fa fa-search fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg>
+</span>
+      </button>
+    
+
+    
+      <div class=" flex items-center">
+        <button
+          id="appearance-switcher"
+          aria-label="Dark mode switcher"
+          type="button"
+          class="text-base hover:text-primary-600 dark:hover:text-primary-400">
+          <div class="flex items-center justify-center dark:hidden">
+            <span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M32 256c0-123.8 100.3-224 223.8-224c11.36 0 29.7 1.668 40.9 3.746c9.616 1.777 11.75 14.63 3.279 19.44C245 86.5 211.2 144.6 211.2 207.8c0 109.7 99.71 193 208.3 172.3c9.561-1.805 16.28 9.324 10.11 16.95C387.9 448.6 324.8 480 255.8 480C132.1 480 32 379.6 32 256z"/></svg>
+</span>
+          </div>
+          <div class="items-center justify-center hidden dark:flex">
+            <span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M256 159.1c-53.02 0-95.1 42.98-95.1 95.1S202.1 351.1 256 351.1s95.1-42.98 95.1-95.1S309 159.1 256 159.1zM509.3 347L446.1 255.1l63.15-91.01c6.332-9.125 1.104-21.74-9.826-23.72l-109-19.7l-19.7-109c-1.975-10.93-14.59-16.16-23.72-9.824L256 65.89L164.1 2.736c-9.125-6.332-21.74-1.107-23.72 9.824L121.6 121.6L12.56 141.3C1.633 143.2-3.596 155.9 2.736 164.1L65.89 256l-63.15 91.01c-6.332 9.125-1.105 21.74 9.824 23.72l109 19.7l19.7 109c1.975 10.93 14.59 16.16 23.72 9.824L256 446.1l91.01 63.15c9.127 6.334 21.75 1.107 23.72-9.822l19.7-109l109-19.7C510.4 368.8 515.6 356.1 509.3 347zM256 383.1c-70.69 0-127.1-57.31-127.1-127.1c0-70.69 57.31-127.1 127.1-127.1s127.1 57.3 127.1 127.1C383.1 326.7 326.7 383.1 256 383.1z"/></svg>
+</span>
+          </div>
+        </button>
+      </div>
+    
+  </nav>
+
+    
+  <div class="flex md:hidden items-center gap-x-5 md:ml-12 h-12">
+    <span></span>
+
+    
+  <div>
+    <div class="cursor-pointer flex items-center nested-menu">
+      <span class="me-1">
+        <span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512">
+    <path fill="currentColor" d="M0 128C0 92.7 28.7 64 64 64H256h48 16H576c35.3 0 64 28.7 64 64V384c0 35.3-28.7 64-64 64H320 304 256 64c-35.3 0-64-28.7-64-64V128zm320 0V384H576V128H320zM178.3 175.9c-3.2-7.2-10.4-11.9-18.3-11.9s-15.1 4.7-18.3 11.9l-64 144c-4.5 10.1 .1 21.9 10.2 26.4s21.9-.1 26.4-10.2l8.9-20.1h73.6l8.9 20.1c4.5 10.1 16.3 14.6 26.4 10.2s14.6-16.3 10.2-26.4l-64-144zM160 233.2L179 276H141l19-42.8zM448 164c11 0 20 9 20 20v4h44 16c11 0 20 9 20 20s-9 20-20 20h-2l-1.6 4.5c-8.9 24.4-22.4 46.6-39.6 65.4c.9 .6 1.8 1.1 2.7 1.6l18.9 11.3c9.5 5.7 12.5 18 6.9 27.4s-18 12.5-27.4 6.9l-18.9-11.3c-4.5-2.7-8.8-5.5-13.1-8.5c-10.6 7.5-21.9 14-34 19.4l-3.6 1.6c-10.1 4.5-21.9-.1-26.4-10.2s.1-21.9 10.2-26.4l3.6-1.6c6.4-2.9 12.6-6.1 18.5-9.8l-12.2-12.2c-7.8-7.8-7.8-20.5 0-28.3s20.5-7.8 28.3 0l14.6 14.6 .5 .5c12.4-13.1 22.5-28.3 29.8-45H448 376c-11 0-20-9-20-20s9-20 20-20h52v-4c0-11 9-20 20-20z"/></svg></span>
+      </span>
+      <div
+        class="text-sm font-medium hover:text-primary-600 dark:hover:text-primary-400"
+        title="Bitboards: Representando el tablero de ajedrez de forma eficiente">ES</div>
+    </div>
+    <div class="absolute menuhide">
+      <div class="pt-2 p-5 mt-2 rounded-xl backdrop-blur shadow-2xl">
+        <div class="flex flex-col space-y-3">
+          
+            <a href="/posts/1766836145577-swift-chess-01/" class="flex items-center">
+              <p
+                class="text-sm font-sm hover:text-primary-600 dark:hover:text-primary-400"
+                title="Bitboards: Representando el tablero de ajedrez de forma eficiente">
+                Español
+              </p>
+            </a>
+          
+            <a href="/en/posts/1766836145577-swift-chess-01/" class="flex items-center">
+              <p
+                class="text-sm font-sm hover:text-primary-600 dark:hover:text-primary-400"
+                title="Bitboards: Representing the Chessboard Efficiently">
+                English
+              </p>
+            </a>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+    
+
+    
+      <button
+        id="search-button-mobile"
+        aria-label="Search"
+        class="text-base hover:text-primary-600 dark:hover:text-primary-400"
+        title="Buscar (/)">
+        <span class="relative block icon"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="search" class="svg-inline--fa fa-search fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg>
+</span>
+      </button>
+    
+
+    
+      <button
+        id="appearance-switcher-mobile"
+        aria-label="Dark mode switcher"
+        type="button"
+        class="text-base hover:text-primary-600 dark:hover:text-primary-400 me-1">
+        <div class="flex items-center justify-center dark:hidden">
+          <span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M32 256c0-123.8 100.3-224 223.8-224c11.36 0 29.7 1.668 40.9 3.746c9.616 1.777 11.75 14.63 3.279 19.44C245 86.5 211.2 144.6 211.2 207.8c0 109.7 99.71 193 208.3 172.3c9.561-1.805 16.28 9.324 10.11 16.95C387.9 448.6 324.8 480 255.8 480C132.1 480 32 379.6 32 256z"/></svg>
+</span>
+        </div>
+        <div class="items-center justify-center hidden dark:flex">
+          <span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M256 159.1c-53.02 0-95.1 42.98-95.1 95.1S202.1 351.1 256 351.1s95.1-42.98 95.1-95.1S309 159.1 256 159.1zM509.3 347L446.1 255.1l63.15-91.01c6.332-9.125 1.104-21.74-9.826-23.72l-109-19.7l-19.7-109c-1.975-10.93-14.59-16.16-23.72-9.824L256 65.89L164.1 2.736c-9.125-6.332-21.74-1.107-23.72 9.824L121.6 121.6L12.56 141.3C1.633 143.2-3.596 155.9 2.736 164.1L65.89 256l-63.15 91.01c-6.332 9.125-1.105 21.74 9.824 23.72l109 19.7l19.7 109c1.975 10.93 14.59 16.16 23.72 9.824L256 446.1l91.01 63.15c9.127 6.334 21.75 1.107 23.72-9.822l19.7-109l109-19.7C510.4 368.8 515.6 356.1 509.3 347zM256 383.1c-70.69 0-127.1-57.31-127.1-127.1c0-70.69 57.31-127.1 127.1-127.1s127.1 57.3 127.1 127.1C383.1 326.7 326.7 383.1 256 383.1z"/></svg>
+</span>
+        </div>
+      </button>
+    
+  </div>
+
+  </div>
+  
+  <div class="-my-2 md:hidden">
+    <div id="menu-button" class="block">
+      
+        <div class="cursor-pointer hover:text-primary-600 dark:hover:text-primary-400">
+          <span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M0 96C0 78.33 14.33 64 32 64H416C433.7 64 448 78.33 448 96C448 113.7 433.7 128 416 128H32C14.33 128 0 113.7 0 96zM0 256C0 238.3 14.33 224 32 224H416C433.7 224 448 238.3 448 256C448 273.7 433.7 288 416 288H32C14.33 288 0 273.7 0 256zM416 448H32C14.33 448 0 433.7 0 416C0 398.3 14.33 384 32 384H416C433.7 384 448 398.3 448 416C448 433.7 433.7 448 416 448z"/></svg>
+</span>
+        </div>
+        <div
+          id="menu-wrapper"
+          class="fixed inset-0 z-30 invisible w-screen h-screen m-0 overflow-auto transition-opacity opacity-0 cursor-default bg-neutral-100/50 backdrop-blur-sm dark:bg-neutral-900/50 pt-[5px]">
+          <ul
+            class="flex space-y-2 mt-3 flex-col items-end w-full px-6 py-6 mx-auto overflow-visible list-none text-end max-w-7xl">
+            <li id="menu-close-button">
+              <span
+                class="cursor-pointer inline-block align-text-bottom hover:text-primary-600 dark:hover:text-primary-400">
+                <span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M310.6 361.4c12.5 12.5 12.5 32.75 0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3L54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75 0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-105.4 105.4L310.6 361.4z"/></svg>
+</span>
+              </span>
+            </li>
+
+            
+              
+  <li class="mt-1">
+  <a
+    href="/"
+    
+    class="flex items-center hover:text-primary-600 dark:hover:text-primary-400"
+    aria-label="Home"
+    title="NSStudent blog">
+    
+    
+      <p class="text-bg font-bg">
+        Home
+      </p>
+    
+  </a>
+</li>
+
+
+
+            
+              
+  <li class="mt-1">
+  <a
+    href="/posts/"
+    
+    class="flex items-center hover:text-primary-600 dark:hover:text-primary-400"
+    aria-label="Posts"
+    title="Posts">
+    
+    
+      <p class="text-bg font-bg">
+        Posts
+      </p>
+    
+  </a>
+</li>
+
+
+
+            
+              
+  <li class="mt-1">
+  <a
+    href="/about/"
+    
+    class="flex items-center hover:text-primary-600 dark:hover:text-primary-400"
+    aria-label="Sobre mí"
+    title="">
+    
+    
+      <p class="text-bg font-bg">
+        Sobre mí
+      </p>
+    
+  </a>
+</li>
+
+
+
+            
+              
+  <li class="mt-1">
+  <a
+    href=""
+    
+    class="flex items-center hover:text-primary-600 dark:hover:text-primary-400"
+    
+    title="">
+    
+    
+  </a>
+</li>
+
+
+
+            
+
+          </ul>
+          
+        </div>
+      
+    </div>
+  </div>
+
+</div>
+
+
+
+
+
+  </div>
+</div>
+
+
+<script
+  type="text/javascript"
+  src="/js/background-blur.min.00a57c73ea12f2cab2980c3c3d649e89f6d82f190f74bbe2b67f2f5e39ab7d032ece47086400ca05396758aace13299da49aca43ea643d2625e62c506267a169.js"
+  integrity="sha512-AKV8c&#43;oS8sqymAw8PWSeifbYLxkPdLvitn8vXjmrfQMuzkcIZADKBTlnWKrOEymdpJrKQ&#43;pkPSYl5ixQYmehaQ=="
+  data-blur-id="menu-blur"></script>
+
+    
+    <div class="relative flex flex-col grow">
+      <main id="main-content" class="grow">
+        
+  <article class="max-w-full">
+    <header>
+      
+        <ol class="text-sm text-neutral-500 dark:text-neutral-400 print:hidden">
+  
+  
+    
+  
+    
+  
+  <li class="hidden">
+    <a class="hover:underline decoration-neutral-300 dark:underline-neutral-600" href="/"
+      >NSStudent blog</a
+    ><span class="px-1 text-primary-500">/</span>
+  </li>
+
+  
+  <li class="inline">
+    <a class="hover:underline decoration-neutral-300 dark:underline-neutral-600" href="/posts/"
+      >Posts</a
+    ><span class="px-1 text-primary-500">/</span>
+  </li>
+
+  
+  <li class="hidden">
+    <a class="hover:underline decoration-neutral-300 dark:underline-neutral-600" href="/posts/1766836145577-swift-chess-01/"
+      >Bitboards: Representando el tablero de ajedrez de forma eficiente</a
+    ><span class="px-1 text-primary-500">/</span>
+  </li>
+
+</ol>
+
+
+      
+      <h1 class="mt-0 text-4xl font-extrabold text-neutral-900 dark:text-neutral">
+        Bitboards: Representando el tablero de ajedrez de forma eficiente
+      </h1>
+    </header>
+    <section class="max-w-full mt-6 prose dark:prose-invert">
+      <p>Desde hace un tiempo estoy trabajando en relacionar dos campos que me interesan mucho, la programación en Swift y el ajedrez.</p>
+<p>Como es bien sabido estos dos mundos han estado ligados desde el principio de la programación: desde los primeros trabajos de Claude Shannon sobre el ajedrez como problema computacional, pasando por la era de las máquinas emblemáticas como Deep Blue enfrentándose a Kasparov, hasta el presente con motores como Stockfish.</p>
+<p>En este artículo vamos a entrar en uno de los conceptos fundamentales de cualquier motor o librería de ajedrez moderna: <strong>los bitboards</strong>.</p>
+<p>La explicación se basa en tres pilares:</p>
+<ul>
+<li>La definición clásica descrita en <a href="https://www.chessprogramming.org/Bitboards"  target="_blank">ChessProgramming Wiki</a></li>
+<li>La primera implementación que encontre del tema en swift, de la cual me basé <a href="https://github.com/nvzqz/Sage/tree/develop"  target="_blank">Sage</a></li>
+<li>La implementación en la que basamos este articulo (<a href="https://github.com/NSStudent/fischer-core/blob/main/Sources/FischerCore/Bitboard.swift"  target="_blank">enlace</a>)</li>
+</ul>
+<p>El objetivo no es solo entender <em>qué es</em> un bitboard, sino <em>por qué esta aproximación es tan potente</em> cuando trabajamos con lógica de ajedrez.</p>
+
+<h2 class="relative group">¿Qué es un Bitboard?
+    <div id="qué-es-un-bitboard" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#qu%c3%a9-es-un-bitboard" aria-label="Ancla">#</a>
+    </span>
+    
+</h2>
+<p>Un <strong>bitboard</strong> es, conceptualmente, un número entero de 64 bits (<code>UInt64</code>) donde <strong>cada bit representa una casilla del tablero de ajedrez</strong>.</p>
+<p>Como el tablero tiene exactamente 64 casillas (8×8), el encaje es perfecto:</p>
+<ul>
+<li>1 bit = 1 casilla</li>
+<li>Bit a <code>1</code> → hay algo en esa casilla</li>
+<li>Bit a <code>0</code> → la casilla está vacía</li>
+</ul>
+<p>El orden de las casillas en relación al bit queda representada en la siguiente imagen:
+<figure><img
+    class="my-0 rounded-md"
+    loading="lazy"
+    decoding="async"
+    fetchpriority="low"
+    alt="bit-position"
+    src="/img/squarebit.svg#center"
+    ></figure>
+</p>
+<p>Por ejemplo, si quisieramos representar la posición de todos los peones blancos de esta imagen:
+<figure><img
+    class="my-0 rounded-md"
+    loading="lazy"
+    decoding="async"
+    fetchpriority="low"
+    alt="pawns"
+    src="/img/pawns-position.svg#center"
+    ></figure>
+</p>
+<p>Indicariamos con un uno las casillas ocupadas y ordenariamos como hemos visto antes quedando el siguiente numero
+<figure><img
+    class="my-0 rounded-md"
+    loading="lazy"
+    decoding="async"
+    fetchpriority="low"
+    alt="bitboardPawns"
+    src="/img/bitboardPawns.svg#center"
+    ></figure>
+</p>
+
+<h2 class="relative group">¿Por qué no usar una matriz 8×8?
+    <div id="por-qué-no-usar-una-matriz-88" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#por-qu%c3%a9-no-usar-una-matriz-88" aria-label="Ancla">#</a>
+    </span>
+    
+</h2>
+<p>La forma más intuitiva de representar un tablero es algo como:</p>
+<div class="highlight-wrapper"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-swift" data-lang="swift"><span class="line"><span class="cl"><span class="p">[[</span><span class="n">Piece</span><span class="p">?]]</span> <span class="c1">// 8x8</span></span></span></code></pre></div></div>
+<p>Esto funciona, pero tiene varios problemas cuando queremos <strong>rendimiento</strong>:</p>
+<ul>
+<li>Accesos indirectos a memoria</li>
+<li>Muchas condiciones (<code>if</code>, <code>guard</code>)</li>
+<li>Dificultad para calcular ataques de forma masiva</li>
+<li>Poco aprovechamiento de la CPU</li>
+</ul>
+<p>Los bitboards, en cambio, permiten:</p>
+<ul>
+<li>Operaciones en <strong>una sola instrucción</strong></li>
+<li>Uso intensivo de operaciones bit a bit (<code>&amp;</code>, <code>|</code>, <code>^</code>, <code>&lt;&lt;</code>, <code>&gt;&gt;</code>)</li>
+<li>Cálculo de movimientos y ataques de forma paralela</li>
+</ul>
+<p>En ajedrez, donde cada movimiento cuenta, esto marca una diferencia enorme.</p>
+
+<h2 class="relative group">Un tablero como conjunto de bitboards
+    <div id="un-tablero-como-conjunto-de-bitboards" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#un-tablero-como-conjunto-de-bitboards" aria-label="Ancla">#</a>
+    </span>
+    
+</h2>
+<p>Una idea clave es que <strong>no existe un único bitboard</strong>, sino varios.</p>
+<p>para una posición en un tablero necesitamos representar distintos tipos de piezas:</p>
+<ul>
+<li>8 peones blancos (Ya hemos visto como representarlos con un solo bitboard).</li>
+<li>2 torres blancas.</li>
+<li>2 caballos blancos.</li>
+<li>2 alfiles blancos.</li>
+<li>El Rey blanco.</li>
+<li>La Dama Blanca</li>
+<li>El equivalente para las piezas negras.</li>
+</ul>
+<p>Por lo que con 12 bitboards tenemos lo necesario para representar una posición de un tablero al completo.</p>
+
+<h2 class="relative group">Nuestra implementación: <code>Bitboard</code> como tipo de dominio
+    <div id="nuestra-implementación-bitboard-como-tipo-de-dominio" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#nuestra-implementaci%c3%b3n-bitboard-como-tipo-de-dominio" aria-label="Ancla">#</a>
+    </span>
+    
+</h2>
+<p>En la librería no usamos directamente <code>UInt64</code> por todas partes. En su lugar, encapsulamos el concepto en un tipo dedicado:</p>
+<div class="highlight-wrapper"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-swift" data-lang="swift"><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">struct</span> <span class="nc">Bitboard</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">private</span><span class="p">(</span><span class="kr">set</span><span class="p">)</span> <span class="kd">var</span> <span class="nv">rawValue</span><span class="p">:</span> <span class="nb">UInt64</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div></div>
+<p>Esto tiene varias ventajas:</p>
+<ul>
+<li>Tipado fuerte (no mezclamos enteros “normales” con bitboards)</li>
+<li>API expresiva</li>
+<li>Seguridad y legibilidad</li>
+<li>Posibilidad de añadir comportamiento específico de ajedrez</li>
+</ul>
+<p>Un <code>Bitboard</code> <strong>no es un número</strong>, es un concepto de dominio.</p>
+
+<h2 class="relative group">Operaciones bit a bit como lenguaje del ajedrez
+    <div id="operaciones-bit-a-bit-como-lenguaje-del-ajedrez" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#operaciones-bit-a-bit-como-lenguaje-del-ajedrez" aria-label="Ancla">#</a>
+    </span>
+    
+</h2>
+<p>Con los 12 bitboard definidos podemos responder preguntas como:</p>
+<ul>
+<li>¿Qué casillas están ocupadas?</li>
+<li>¿Qué casillas están libres?</li>
+<li>¿Qué casillas ataca esta pieza?</li>
+</ul>
+<p>La base de todo son las operaciones binarias.</p>
+
+<h3 class="relative group">OR (<code>|</code>) – unión
+    <div id="or---unión" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#or---uni%c3%b3n" aria-label="Ancla">#</a>
+    </span>
+    
+</h3>
+<p>Pensando en <code>bitboards</code> como el conjunto de los 12 bitboard de un posición tenemos el conjunto de las casillas ocupadas de la siguiente manera:</p>
+<div class="highlight-wrapper"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-swift" data-lang="swift"><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">var</span> <span class="nv">occupiedSpaces</span><span class="p">:</span> <span class="n">Bitboard</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">bitboards</span><span class="p">.</span><span class="bp">reduce</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">|</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div></div>
+
+<h3 class="relative group">NOT (<code>~</code>) – complemento
+    <div id="not---complemento" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#not---complemento" aria-label="Ancla">#</a>
+    </span>
+    
+</h3>
+<p>Una vez tenemos las casillas ocupadas es facil detectar las libres como el complemetario:</p>
+<div class="highlight-wrapper"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-swift" data-lang="swift"><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">var</span> <span class="nv">emptySpaces</span><span class="p">:</span> <span class="n">Bitboard</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="o">~</span><span class="n">occupiedSpaces</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div></div>
+<p>Podemos representar todas las operadores logicos de los binarios que queramos, aqui un ejemplo:</p>
+<div class="highlight-wrapper"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-swift" data-lang="swift"><span class="line"><span class="cl"><span class="kd">extension</span> <span class="nc">Bitboard</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">lhs</span><span class="p">:</span> <span class="n">Bitboard</span><span class="p">,</span> <span class="n">rhs</span><span class="p">:</span> <span class="n">Bitboard</span><span class="p">)</span> <span class="p">-&gt;</span> <span class="n">Bitboard</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="kd">let</span> <span class="nv">shifted</span> <span class="p">=</span> <span class="n">lhs</span><span class="p">.</span><span class="n">rawValue</span> <span class="o">&lt;&lt;</span> <span class="n">rhs</span><span class="p">.</span><span class="n">rawValue</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">Bitboard</span><span class="p">(</span><span class="n">rawValue</span><span class="p">:</span> <span class="n">shifted</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="o">&gt;&gt;</span> <span class="p">(</span><span class="n">lhs</span><span class="p">:</span> <span class="n">Bitboard</span><span class="p">,</span> <span class="n">rhs</span><span class="p">:</span> <span class="n">Bitboard</span><span class="p">)</span> <span class="p">-&gt;</span> <span class="n">Bitboard</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="kd">let</span> <span class="nv">shifted</span> <span class="p">=</span> <span class="n">lhs</span><span class="p">.</span><span class="n">rawValue</span> <span class="o">&gt;&gt;</span> <span class="n">rhs</span><span class="p">.</span><span class="n">rawValue</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">Bitboard</span><span class="p">(</span><span class="n">rawValue</span><span class="p">:</span> <span class="n">shifted</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="o">&lt;&lt;=</span> <span class="p">(</span><span class="n">lhs</span><span class="p">:</span> <span class="kr">inout</span> <span class="n">Bitboard</span><span class="p">,</span> <span class="n">rhs</span><span class="p">:</span> <span class="n">Bitboard</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">lhs</span> <span class="p">=</span> <span class="n">lhs</span> <span class="o">&lt;&lt;</span> <span class="n">rhs</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="o">&gt;&gt;=</span> <span class="p">(</span><span class="n">lhs</span><span class="p">:</span> <span class="kr">inout</span> <span class="n">Bitboard</span><span class="p">,</span> <span class="n">rhs</span><span class="p">:</span> <span class="n">Bitboard</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">lhs</span> <span class="p">=</span> <span class="n">lhs</span> <span class="o">&gt;&gt;</span> <span class="n">rhs</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">lhs</span><span class="p">:</span> <span class="n">Bitboard</span><span class="p">,</span> <span class="n">rhs</span><span class="p">:</span> <span class="n">Bitboard</span><span class="p">)</span> <span class="p">-&gt;</span> <span class="n">Bitboard</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Bitboard</span><span class="p">(</span><span class="n">rawValue</span><span class="p">:</span> <span class="n">lhs</span><span class="p">.</span><span class="n">rawValue</span> <span class="o">&amp;</span> <span class="n">rhs</span><span class="p">.</span><span class="n">rawValue</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="o">|</span> <span class="p">(</span><span class="n">lhs</span><span class="p">:</span> <span class="n">Bitboard</span><span class="p">,</span> <span class="n">rhs</span><span class="p">:</span> <span class="n">Bitboard</span><span class="p">)</span> <span class="p">-&gt;</span> <span class="n">Bitboard</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Bitboard</span><span class="p">(</span><span class="n">rawValue</span><span class="p">:</span> <span class="n">lhs</span><span class="p">.</span><span class="n">rawValue</span> <span class="o">|</span> <span class="n">rhs</span><span class="p">.</span><span class="n">rawValue</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="o">^</span> <span class="p">(</span><span class="n">lhs</span><span class="p">:</span> <span class="n">Bitboard</span><span class="p">,</span> <span class="n">rhs</span><span class="p">:</span> <span class="n">Bitboard</span><span class="p">)</span> <span class="p">-&gt;</span> <span class="n">Bitboard</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Bitboard</span><span class="p">(</span><span class="n">rawValue</span><span class="p">:</span> <span class="n">lhs</span><span class="p">.</span><span class="n">rawValue</span> <span class="o">^</span> <span class="n">rhs</span><span class="p">.</span><span class="n">rawValue</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="o">&gt;</span> <span class="p">(</span><span class="n">lhs</span><span class="p">:</span> <span class="n">Bitboard</span><span class="p">,</span> <span class="n">rhs</span><span class="p">:</span> <span class="n">Bitboard</span><span class="p">)</span> <span class="p">-&gt;</span> <span class="nb">Bool</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">lhs</span><span class="p">.</span><span class="n">rawValue</span> <span class="o">&gt;</span> <span class="n">rhs</span><span class="p">.</span><span class="n">rawValue</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="o">&lt;</span> <span class="p">(</span><span class="n">lhs</span><span class="p">:</span> <span class="n">Bitboard</span><span class="p">,</span> <span class="n">rhs</span><span class="p">:</span> <span class="n">Bitboard</span><span class="p">)</span> <span class="p">-&gt;</span> <span class="nb">Bool</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">lhs</span><span class="p">.</span><span class="n">rawValue</span> <span class="o">&lt;</span> <span class="n">rhs</span><span class="p">.</span><span class="n">rawValue</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kd">static</span> <span class="kr">prefix</span> <span class="kd">func</span> <span class="o">~</span> <span class="p">(</span><span class="n">board</span><span class="p">:</span> <span class="n">Bitboard</span><span class="p">)</span> <span class="p">-&gt;</span> <span class="n">Bitboard</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Bitboard</span><span class="p">(</span><span class="n">rawValue</span><span class="p">:</span> <span class="o">~</span><span class="n">board</span><span class="p">.</span><span class="n">rawValue</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div></div>
+
+<h2 class="relative group">Iterar casillas: popcount y bit scan
+    <div id="iterar-casillas-popcount-y-bit-scan" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#iterar-casillas-popcount-y-bit-scan" aria-label="Ancla">#</a>
+    </span>
+    
+</h2>
+<p>Otro punto clave es <strong>iterar solo sobre las casillas activas</strong>, no sobre las 64.</p>
+<p>En lugar de:</p>
+<div class="highlight-wrapper"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-swift" data-lang="swift"><span class="line"><span class="cl"><span class="k">for</span> <span class="n">square</span> <span class="k">in</span> <span class="mf">0.</span><span class="p">.&lt;</span><span class="mi">64</span></span></span></code></pre></div></div>
+<p>Usamos técnicas como:</p>
+<ul>
+<li><code>popcount</code> → número de bits activos</li>
+<li>extracción del bit menos significativo</li>
+<li>limpiar el bit una vez procesado</li>
+</ul>
+<p>En nuestra implementación, el iterador del <code>Bitboard</code> hace precisamente eso: va sacando la <strong>LS1B</strong> (least significant set bit) con <code>popLSB()</code> hasta que el tablero queda vacío. Internamente usamos el truco clásico descrito en <a href="https://www.chessprogramming.org/BitScan"  target="_blank">BitScan</a>:</p>
+<div class="highlight-wrapper"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-swift" data-lang="swift"><span class="line"><span class="cl"><span class="kd">extension</span> <span class="nc">Bitboard</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">/// A lookup table of least significant bit indices.</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">let</span> <span class="nv">lsbTable</span><span class="p">:</span> <span class="p">[</span><span class="nb">Int</span><span class="p">]</span> <span class="p">=</span> <span class="p">[</span><span class="mi">00</span><span class="p">,</span> <span class="mi">01</span><span class="p">,</span> <span class="mi">48</span><span class="p">,</span> <span class="mi">02</span><span class="p">,</span> <span class="mi">57</span><span class="p">,</span> <span class="mi">49</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">03</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                                          <span class="mi">61</span><span class="p">,</span> <span class="mi">58</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">42</span><span class="p">,</span> <span class="mi">38</span><span class="p">,</span> <span class="mi">29</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">04</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                                          <span class="mi">62</span><span class="p">,</span> <span class="mi">55</span><span class="p">,</span> <span class="mi">59</span><span class="p">,</span> <span class="mi">36</span><span class="p">,</span> <span class="mi">53</span><span class="p">,</span> <span class="mi">51</span><span class="p">,</span> <span class="mi">43</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                                          <span class="mi">45</span><span class="p">,</span> <span class="mi">39</span><span class="p">,</span> <span class="mi">33</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">05</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                                          <span class="mi">63</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span> <span class="mi">56</span><span class="p">,</span> <span class="mi">27</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">41</span><span class="p">,</span> <span class="mi">37</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                                          <span class="mi">54</span><span class="p">,</span> <span class="mi">35</span><span class="p">,</span> <span class="mi">52</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">44</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                                          <span class="mi">46</span><span class="p">,</span> <span class="mi">26</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">34</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">31</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                                          <span class="mi">25</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span> <span class="mi">09</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">08</span><span class="p">,</span> <span class="mi">07</span><span class="p">,</span> <span class="mi">06</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">/// A lookup table of most significant bit indices.</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">let</span> <span class="nv">msbTable</span><span class="p">:</span> <span class="p">[</span><span class="nb">Int</span><span class="p">]</span> <span class="p">=</span> <span class="p">[</span><span class="mi">00</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span> <span class="mi">01</span><span class="p">,</span> <span class="mi">56</span><span class="p">,</span> <span class="mi">48</span><span class="p">,</span> <span class="mi">27</span><span class="p">,</span> <span class="mi">02</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                                          <span class="mi">57</span><span class="p">,</span> <span class="mi">49</span><span class="p">,</span> <span class="mi">41</span><span class="p">,</span> <span class="mi">37</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">03</span><span class="p">,</span> <span class="mi">61</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                                          <span class="mi">54</span><span class="p">,</span> <span class="mi">58</span><span class="p">,</span> <span class="mi">35</span><span class="p">,</span> <span class="mi">52</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">42</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">44</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                                          <span class="mi">38</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">29</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">04</span><span class="p">,</span> <span class="mi">62</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                                          <span class="mi">46</span><span class="p">,</span> <span class="mi">55</span><span class="p">,</span> <span class="mi">26</span><span class="p">,</span> <span class="mi">59</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">36</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">53</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                                          <span class="mi">34</span><span class="p">,</span> <span class="mi">51</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">43</span><span class="p">,</span> <span class="mi">31</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                                          <span class="mi">25</span><span class="p">,</span> <span class="mi">39</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">33</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">09</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                                          <span class="mi">13</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">08</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">07</span><span class="p">,</span> <span class="mi">06</span><span class="p">,</span> <span class="mi">05</span><span class="p">,</span> <span class="mi">63</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">/// A lookup table of bitboards for all squares.</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">let</span> <span class="nv">bitboardTable</span><span class="p">:</span> <span class="p">[</span><span class="n">Bitboard</span><span class="p">]</span> <span class="p">=</span> <span class="p">(</span><span class="mi">0</span> <span class="p">..</span><span class="o">&lt;</span> <span class="mi">64</span><span class="p">).</span><span class="bp">map</span> <span class="p">{</span> <span class="n">Bitboard</span><span class="p">(</span><span class="n">rawValue</span><span class="p">:</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="nv">$0</span><span class="p">)</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">/// The De Bruijn multiplier.</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">let</span> <span class="nv">debruijn64</span><span class="p">:</span> <span class="nb">UInt64</span> <span class="p">=</span> <span class="mh">0x03f79d71b4cb0a89</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">/// Returns the index of the lsb value.</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="kd">func</span> <span class="nf">index</span><span class="p">(</span><span class="n">lsb</span> <span class="n">value</span><span class="p">:</span> <span class="n">Bitboard</span><span class="p">)</span> <span class="p">-&gt;</span> <span class="nb">Int</span><span class="p">?</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">guard</span> <span class="n">value</span> <span class="o">!=</span> <span class="mi">0</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="kc">nil</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">Bitboard</span><span class="p">.</span><span class="n">lsbTable</span><span class="p">[</span><span class="nb">Int</span><span class="p">((</span><span class="n">value</span><span class="p">.</span><span class="n">rawValue</span> <span class="o">&amp;*</span> <span class="n">Bitboard</span><span class="p">.</span><span class="n">debruijn64</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">58</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">/// The least significant bit.</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kd">var</span> <span class="nv">lsb</span><span class="p">:</span> <span class="n">Bitboard</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">Bitboard</span><span class="p">(</span><span class="n">rawValue</span><span class="p">:</span> <span class="n">rawValue</span> <span class="o">&amp;</span> <span class="p">(</span><span class="mi">0</span> <span class="o">&amp;-</span> <span class="n">rawValue</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">/// The index for the least significant bit of `self`.</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kd">var</span> <span class="nv">lsbIndex</span><span class="p">:</span> <span class="nb">Int</span><span class="p">?</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">index</span><span class="p">(</span><span class="n">lsb</span><span class="p">:</span> <span class="n">lsb</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">/// The square for the least significant bit of `self`.</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kd">var</span> <span class="nv">lsbSquare</span><span class="p">:</span> <span class="n">Square</span><span class="p">?</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">lsbIndex</span><span class="p">.</span><span class="n">flatMap</span><span class="p">({</span> <span class="n">Square</span><span class="p">(</span><span class="n">rawValue</span><span class="p">:</span> <span class="nv">$0</span><span class="p">)</span> <span class="p">})</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="kd">var</span> <span class="nv">msbShifted</span><span class="p">:</span> <span class="nb">UInt64</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="kd">var</span> <span class="nv">x</span> <span class="p">=</span> <span class="n">rawValue</span>
+</span></span><span class="line"><span class="cl">        <span class="n">x</span> <span class="o">|=</span> <span class="n">x</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">        <span class="n">x</span> <span class="o">|=</span> <span class="n">x</span> <span class="o">&gt;&gt;</span> <span class="mi">2</span>
+</span></span><span class="line"><span class="cl">        <span class="n">x</span> <span class="o">|=</span> <span class="n">x</span> <span class="o">&gt;&gt;</span> <span class="mi">4</span>
+</span></span><span class="line"><span class="cl">        <span class="n">x</span> <span class="o">|=</span> <span class="n">x</span> <span class="o">&gt;&gt;</span> <span class="mi">8</span>
+</span></span><span class="line"><span class="cl">        <span class="n">x</span> <span class="o">|=</span> <span class="n">x</span> <span class="o">&gt;&gt;</span> <span class="mi">16</span>
+</span></span><span class="line"><span class="cl">        <span class="n">x</span> <span class="o">|=</span> <span class="n">x</span> <span class="o">&gt;&gt;</span> <span class="mi">32</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">x</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">/// The most significant bit.</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kd">var</span> <span class="nv">msb</span><span class="p">:</span> <span class="n">Bitboard</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">Bitboard</span><span class="p">(</span><span class="n">rawValue</span><span class="p">:</span> <span class="p">(</span><span class="n">msbShifted</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">/// The index for the most significant bit of `self`.</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kd">var</span> <span class="nv">msbIndex</span><span class="p">:</span> <span class="nb">Int</span><span class="p">?</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">guard</span> <span class="n">rawValue</span> <span class="o">!=</span> <span class="mi">0</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="kc">nil</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">Bitboard</span><span class="p">.</span><span class="n">msbTable</span><span class="p">[</span><span class="nb">Int</span><span class="p">((</span><span class="n">msbShifted</span> <span class="o">&amp;*</span> <span class="n">Bitboard</span><span class="p">.</span><span class="n">debruijn64</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">58</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">/// The square for the most significant bit of `self`.</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kd">var</span> <span class="nv">msbSquare</span><span class="p">:</span> <span class="n">Square</span><span class="p">?</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">msbIndex</span><span class="p">.</span><span class="n">flatMap</span><span class="p">({</span> <span class="n">Square</span><span class="p">(</span><span class="n">rawValue</span><span class="p">:</span> <span class="nv">$0</span><span class="p">)</span> <span class="p">})</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">/// Removes the least significant bit and returns it.</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kr">mutating</span> <span class="kd">func</span> <span class="nf">popLSB</span><span class="p">()</span> <span class="p">-&gt;</span> <span class="n">Bitboard</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="kd">let</span> <span class="nv">lsb</span> <span class="p">=</span> <span class="kc">self</span><span class="p">.</span><span class="n">lsb</span>
+</span></span><span class="line"><span class="cl">        <span class="n">rawValue</span> <span class="o">-=</span> <span class="n">lsb</span><span class="p">.</span><span class="n">rawValue</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">lsb</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">/// Removes the least significant bit and returns its index, if any.</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kr">mutating</span> <span class="kd">func</span> <span class="nf">popLSBIndex</span><span class="p">()</span> <span class="p">-&gt;</span> <span class="nb">Int</span><span class="p">?</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">index</span><span class="p">(</span><span class="n">lsb</span><span class="p">:</span> <span class="n">popLSB</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">/// Removes the least significant bit and returns its square, if any.</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kr">mutating</span> <span class="kd">func</span> <span class="nf">popLSBSquare</span><span class="p">()</span> <span class="p">-&gt;</span> <span class="n">Square</span><span class="p">?</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">popLSBIndex</span><span class="p">().</span><span class="n">flatMap</span><span class="p">({</span> <span class="n">Square</span><span class="p">(</span><span class="n">rawValue</span><span class="p">:</span> <span class="nv">$0</span><span class="p">)</span> <span class="p">})</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div></div>
+<ul>
+<li><code>lsb = x &amp; -x</code> con esta operación conseguimos aislar el bit activo menos significativo (el 1 que esta mas abajo en el número binario)</li>
+<li>Gracias a las tablas de De Bruijn y y la función <code>private func index(lsb value: Bitboard) -&gt; Int?</code> podemos sacar el indice para saber la casilla</li>
+<li>Hacemos <code>popLSB</code> para eliminar ese bit y continuar la iteración.</li>
+</ul>
+<div class="highlight-wrapper"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-swift" data-lang="swift"><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">struct</span> <span class="nc">Bitboard</span><span class="p">:</span> <span class="nb">Equatable</span><span class="p">,</span> <span class="nb">Hashable</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">private</span><span class="p">(</span><span class="kr">set</span><span class="p">)</span> <span class="kd">var</span> <span class="nv">rawValue</span><span class="p">:</span> <span class="nb">UInt64</span> <span class="p">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kd">init</span><span class="p">(</span><span class="n">rawValue</span><span class="p">:</span> <span class="nb">UInt64</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="kc">self</span><span class="p">.</span><span class="n">rawValue</span> <span class="p">=</span> <span class="n">rawValue</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kd">init</span><span class="p">()</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">/// An iterator over the squares set in a `Bitboard`.</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">///</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">/// Iterates by popping least significant bits until the bitboard is empty.</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kd">struct</span> <span class="nc">Iterator</span><span class="p">:</span> <span class="n">IteratorProtocol</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">fileprivate</span> <span class="kd">var</span> <span class="nv">bitboard</span><span class="p">:</span> <span class="n">Bitboard</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">/// Returns the next square in the bitboard by removing the least significant bit.</span>
+</span></span><span class="line"><span class="cl">        <span class="kd">public</span> <span class="kr">mutating</span> <span class="kd">func</span> <span class="nf">next</span><span class="p">()</span> <span class="p">-&gt;</span> <span class="n">Square</span><span class="p">?</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="n">bitboard</span><span class="p">.</span><span class="n">popLSBSquare</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div></div>
+<p>Esto reduce muchísimo el coste computacional, especialmente en generación de movimientos, porque solo recorremos las casillas con piezas en vez de las 64.</p>
+
+<h2 class="relative group">Conclusión
+    <div id="conclusión" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#conclusi%c3%b3n" aria-label="Ancla">#</a>
+    </span>
+    
+</h2>
+<p>Los bitboards no son solo una optimización:<br>
+son una <strong>forma distinta de pensar el ajedrez desde el código</strong>.</p>
+<p>Al representar el tablero como datos binarios:</p>
+<ul>
+<li>El ajedrez se convierte en álgebra</li>
+<li>Los movimientos en operaciones</li>
+<li>La posición en un estado compacto y eficiente</li>
+</ul>
+<p>En próximos artículos veremos cómo generar <strong>Bitboards de ataques</strong> para cada pieza, construir <strong>posiciones completas</strong> y <strong>generación legal de jugadas</strong> a partir de esta base.</p>
+
+    </section>
+    <footer class="pt-8">
+      
+
+    </footer>
+  </article>
+
+        
+
+
+  
+
+
+
+
+
+
+<div
+  id="scroll-to-top"
+  class="fixed bottom-6 end-6 z-50 transform translate-y-4 opacity-0 duration-200">
+  <a
+    href="#the-top"
+    class="pointer-events-auto flex h-12 w-12 items-center justify-center rounded-full bg-neutral/50 text-xl text-neutral-700 hover:text-primary-600 dark:bg-neutral-800/50 dark:text-neutral dark:hover:text-primary-400"
+    aria-label="Ir arriba"
+    title="Ir arriba">
+    &uarr;
+  </a>
+</div>
+
+      </main><footer id="site-footer" class="py-10 print:hidden">
+  
+  
+    
+      
+      
+        
+      
+      
+      
+      
+      <nav class="flex flex-row pb-4 text-base font-medium text-neutral-500 dark:text-neutral-400 overflow-x-auto py-2">
+        <ul class="flex list-none flex-row">
+          
+            <li class=" flex mb-1 text-end sm:mb-0 sm:me-7 sm:last:me-0 me-4">
+              <a
+                class="decoration-primary-500 hover:underline hover:decoration-2 hover:underline-offset-2 flex items-center"
+                href=""
+                title="">
+                
+                
+              </a>
+            </li>
+          
+        </ul>
+      </nav>
+    
+  
+  <div class="flex items-center justify-between">
+    
+    
+      <p class="text-sm text-neutral-500 dark:text-neutral-400">
+          &copy;
+          2025
+          NSStudent
+      </p>
+    
+
+    
+    
+      <p class="text-xs text-neutral-500 dark:text-neutral-400">
+        
+        
+        Desarrollada con <a class="hover:underline hover:decoration-primary-400 hover:text-primary-500"
+          href="https://gohugo.io/" target="_blank" rel="noopener noreferrer">Hugo</a> &amp; <a class="hover:underline hover:decoration-primary-400 hover:text-primary-500"
+          href="https://blowfish.page/" target="_blank" rel="noopener noreferrer">Blowfish</a>
+      </p>
+    
+  </div>
+  
+    <script>
+      mediumZoom(document.querySelectorAll("img:not(.nozoom)"), {
+        margin: 24,
+        background: "rgba(0,0,0,0.5)",
+        scrollOffset: 0,
+      });
+    </script>
+  
+  
+  
+  <script
+    type="text/javascript"
+    src="/js/process.min.ee03488f19c93c2efb199e2e3014ea5f3cb2ce7d45154adb3399a158cac27ca52831db249ede5bb602700ef87eb02434139de0858af1818ab0fb4182472204a4.js"
+    integrity="sha512-7gNIjxnJPC77GZ4uMBTqXzyyzn1FFUrbM5mhWMrCfKUoMdsknt5btgJwDvh&#43;sCQ0E53ghYrxgYqw&#43;0GCRyIEpA=="></script>
+  
+  
+</footer>
+<div
+  id="search-wrapper"
+  class="invisible fixed inset-0 flex h-screen w-screen cursor-default flex-col bg-neutral-500/50 p-4 backdrop-blur-sm dark:bg-neutral-900/50 sm:p-6 md:p-[10vh] lg:p-[12vh] z-500"
+  data-url="https://nsstudent.dev/">
+  <div
+    id="search-modal"
+    class="flex flex-col w-full max-w-3xl min-h-0 mx-auto border rounded-md shadow-lg top-20 border-neutral-200 bg-neutral dark:border-neutral-700 dark:bg-neutral-800">
+    <header class="relative z-10 flex items-center justify-between flex-none px-2">
+      <form class="flex items-center flex-auto min-w-0">
+        <div class="flex items-center justify-center w-8 h-8 text-neutral-400">
+          <span class="relative block icon"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="search" class="svg-inline--fa fa-search fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg>
+</span>
+        </div>
+        <input
+          type="search"
+          id="search-query"
+          class="flex flex-auto h-12 mx-1 bg-transparent appearance-none focus:outline-dotted focus:outline-2 focus:outline-transparent"
+          placeholder="Buscar"
+          tabindex="0">
+      </form>
+      <button
+        id="close-search-button"
+        class="flex items-center justify-center w-8 h-8 text-neutral-700 hover:text-primary-600 dark:text-neutral dark:hover:text-primary-400"
+        title="Cerrar (Esc)">
+        <span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M310.6 361.4c12.5 12.5 12.5 32.75 0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3L54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75 0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-105.4 105.4L310.6 361.4z"/></svg>
+</span>
+      </button>
+    </header>
+    <section class="flex-auto px-2 overflow-auto">
+      <ul id="search-results">
+        
+      </ul>
+    </section>
+  </div>
+</div>
+
+    </div>
+  </body>
+  
+</html>
