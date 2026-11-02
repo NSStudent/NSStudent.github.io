@@ -51,6 +51,8 @@ struct PiecesFeature {
             /// Only when the square under the finger changes.
             case userDragging(on: Square)
             case userEndDragging(on: Square)
+            /// The drag ended outside the board.
+            case userCancelDragging
         }
     }
 
@@ -126,6 +128,10 @@ struct BoardFeature {
             case let .pieces(.delegate(.userEndDragging(on: square))),
                  let .legalTargetTapped(square):
                 return play(&state, to: square)
+
+            case .pieces(.delegate(.userCancelDragging)):
+                state.clearSelection()
+                return .none
 
             case .background, .pieces, .delegate:
                 return .none
@@ -340,6 +346,8 @@ struct PiecesLayer: View {
                     drag = nil
                     if let target {
                         store.send(.delegate(.userEndDragging(on: target)))
+                    } else {
+                        store.send(.delegate(.userCancelDragging))
                     }
                 }
             }
