@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>La escena del reloj, de dos formas</title>
+<style>
+  :root { --bg:#ffffff; --surface:#E5E7EB; --text:#111827; --text2:#6B7280; --accent:#3B82F6; }
+  :root[data-theme="dark"] { --bg:#111827; --surface:#1F2937; --text:#ffffff; --text2:#9CA3AF; }
+  * { box-sizing:border-box; }
+  html, body { margin:0; overflow:hidden; background:var(--bg); color:var(--text); font:14px/1.4 -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif; }
+  .wrap { display:grid; grid-template-columns:1fr 1fr; gap:12px; padding:12px; }
+  @media (max-width: 560px) { .wrap { grid-template-columns:1fr; } }
+  figure { margin:0; background:var(--surface); border-radius:14px; padding:12px; }
+  .stage { border-radius:10px; background:var(--bg); }
+  .stage canvas { display:block; width:100%; aspect-ratio:360 / 280; }
+  figcaption { margin-top:8px; color:var(--text2); }
+  figcaption b { color:var(--text); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <figure>
+    <div class="stage mc" data-scheme="dark"><canvas id="phone" role="img"></canvas></div>
+    <figcaption data-i18n="c_phone"></figcaption>
+  </figure>
+  <figure>
+    <div class="stage mc" data-scheme="dark"><canvas id="fold" role="img"></canvas></div>
+    <figcaption data-i18n="c_fold"></figcaption>
+  </figure>
+</div>
+<!-- La escena del reloj del kit de diseño de MindChess (copia de design-iphone/assets/motion.js en ../motion-scene/assets),
+     con la opción fold que la app activa cuando el iPhone Duo está en tabletop. -->
+<script>window.UI = { base: "../motion-scene/" };</script>
+<script src="../motion-scene/assets/motion.js"></script>
+<script>
+// ---- Idioma: ?lang=es (por defecto) o ?lang=en ----
+const params = new URLSearchParams(location.search);
+const LANG = params.get("lang") === "en" ? "en" : "es";
+const TX = {
+  es: {
+    title: "La escena del reloj, de dos formas",
+    c_phone: "<b>iPhone o Duo cerrado:</b> el reloj de pie, un jugador arriba y otro abajo.",
+    c_fold: "<b>iPhone Duo en tabletop:</b> los tiempos en la mitad levantada y las zonas para pulsar en la base, con la bisagra en medio.",
+    a_phone: "Reloj de ajedrez en vertical: los dos tiempos, uno girado para el rival, y cada pulsación pasa el turno",
+    a_fold: "Reloj de ajedrez en tabletop: los tiempos arriba, las zonas de pulsación abajo y la bisagra entre ellas",
+  },
+  en: {
+    title: "The clock scene, two ways",
+    c_phone: "<b>iPhone or closed Duo:</b> the clock standing up, one player at the top and one at the bottom.",
+    c_fold: "<b>iPhone Duo in tabletop:</b> the times on the raised half and the tap areas on the base, with the hinge in between.",
+    a_phone: "Upright chess clock: both times, one turned for the opponent, and each tap passes the turn",
+    a_fold: "Tabletop chess clock: the times on top, the tap areas below and the hinge between them",
+  },
+};
+const tr = (k) => TX[LANG][k];
+document.documentElement.lang = LANG; document.title = tr("title");
+document.querySelectorAll("[data-i18n]").forEach((el) => { el.innerHTML = tr(el.dataset.i18n); });
+
+// ---- Las dos escenas: la misma función draw(t) con fold apagado y encendido ----
+const M = window.MOTION, def = M.scenes.clock;
+const phone = document.getElementById("phone"), fold = document.getElementById("fold");
+phone._motion = { def, opts: {} }; fold._motion = { def, opts: { fold: true } };
+phone.setAttribute("aria-label", tr("a_phone")); fold.setAttribute("aria-label", tr("a_fold"));
+// con Reducir movimiento en el sistema, el fotograma quieto, como en la app
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches, t0 = performance.now();
+function tick(now) {
+  const t = reduce ? def.still : (((now - t0) / 1000) % (def.dur / def.speed)) * def.speed;
+  M.render(phone, t); M.render(fold, t);
+  requestAnimationFrame(tick);
+}
+
+// ---- Tema: sigue al blog (postMessage) o al sistema ----
+function setTheme(th) { document.documentElement.dataset.theme = th; document.querySelectorAll(".stage").forEach((s) => s.dataset.scheme = th); }
+setTheme(params.get("theme") || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"));
+addEventListener("message", e => { if (e.data && e.data.nsdemoTheme) setTheme(e.data.nsdemoTheme); });
+requestAnimationFrame(tick);
+// ---- Alto: le dice al blog cuánto mide, para que el iframe tenga justo ese alto y no haga scroll ----
+function sendHeight() { if (parent !== window) parent.postMessage({ nsdemoHeight: Math.ceil(document.body.getBoundingClientRect().height) }, "*"); }
+new ResizeObserver(sendHeight).observe(document.body);
+addEventListener("load", sendHeight);
+</script>
+</body>
+</html>

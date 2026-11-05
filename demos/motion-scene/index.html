@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Escenas de MindChess · draw(t)</title>
+<style>
+  :root { --bg:#ffffff; --surface:#E5E7EB; --skeleton:#D1D5DB; --text:#111827; --text2:#6B7280; --accent:#3B82F6; --line:#D1D5DB; }
+  :root[data-theme="dark"] { --bg:#111827; --surface:#1F2937; --skeleton:#374151; --text:#ffffff; --text2:#9CA3AF; --line:#374151; }
+  * { box-sizing:border-box; }
+  [hidden] { display:none !important; }
+  html, body { margin:0; overflow:hidden; background:var(--bg); color:var(--text); font:14px/1.4 -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif; }
+  .wrap { display:grid; grid-template-columns: 1.3fr 1fr; gap:16px; padding:12px; }
+  @media (max-width: 640px) { .wrap { grid-template-columns: 1fr; } }
+  .card { background:var(--surface); border-radius:14px; padding:12px; }
+  h2 { font-size:13px; text-transform:uppercase; letter-spacing:.06em; color:var(--text2); margin:0 0 8px; }
+  .stage { border-radius:10px; background:var(--bg); }
+  .stage canvas { display:block; width:100%; aspect-ratio:360 / 280; }
+  #curve { width:100%; display:block; border-radius:10px; background:var(--bg); }
+  .row { display:flex; align-items:center; gap:8px; margin-top:8px; flex-wrap:wrap; }
+  .row label { color:var(--text2); min-width:84px; }
+  input[type=range] { flex:1; accent-color:var(--accent); min-width:120px; }
+  button { background:var(--accent); color:#fff; border:0; border-radius:8px; padding:6px 12px; font:inherit; font-weight:600; cursor:pointer; }
+  button.ghost { background:transparent; color:var(--accent); border:1.5px solid var(--accent); }
+  button[aria-pressed="true"].ghost { background:var(--accent); color:#fff; }
+  .mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size:12px; color:var(--text2); }
+  .val { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; min-width:52px; text-align:right; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <section class="card">
+    <h2 data-i18n="h_scene">La escena: una función de t</h2>
+    <div class="row" id="picker" style="margin:0 0 8px" role="group" data-i18n-aria="a_pick" aria-label="Escena">
+      <button class="ghost" data-scene="coins" data-i18n="coins">Monedas → insignia</button>
+      <button class="ghost" data-scene="bots" data-i18n="bots">Encuentra tu rival</button>
+    </div>
+    <div class="stage mc" id="stage" data-scheme="dark"><canvas id="scene" role="img"></canvas></div>
+    <div class="row">
+      <button id="play" data-i18n="pause">Pausa</button>
+      <button id="still" class="ghost" aria-pressed="false" data-i18n="still_btn" data-i18n-title="still_help">Reducir movimiento</button>
+      <span class="mono" id="state"></span>
+    </div>
+    <div class="row">
+      <label for="t">t</label>
+      <input id="t" type="range" min="0" max="6" step="0.01" value="0">
+      <span class="val" id="tval">0.00 s</span>
+    </div>
+    <div class="row">
+      <label for="speed" data-i18n="speed">velocidad</label>
+      <input id="speed" type="range" min="0.25" max="2" step="0.05" value="1">
+      <span class="val" id="speedval">1.00×</span>
+    </div>
+    <p class="mono" data-i18n="still_help"></p>
+  </section>
+  <section class="card">
+    <h2 data-i18n="h_spring">El muelle: spring(x, w)</h2>
+    <canvas id="curve" width="560" height="360" data-i18n-aria="a_curve" aria-label="Curva del muelle amortiguado"></canvas>
+    <div class="row">
+      <label for="z" data-i18n="damping">amortiguación</label>
+      <input id="z" type="range" min="0.2" max="1" step="0.01" value="0.78">
+      <span class="val" id="zval">0.78</span>
+    </div>
+    <div class="row">
+      <label for="w" data-i18n="freq">frecuencia w</label>
+      <input id="w" type="range" min="4" max="30" step="0.5" value="16">
+      <span class="val" id="wval">16</span>
+    </div>
+    <p class="mono" id="note"></p>
+  </section>
+</div>
+<!-- Las escenas son las del kit de diseño de MindChess, sin tocar: assets/motion.js es una copia de
+     design-iphone/assets/motion.js, con las piezas, los avatares de los bots y la insignia que usan. -->
+<script src="assets/badges.js"></script>
+<script src="assets/motion.js"></script>
+<script>
+// ---- Idioma: ?lang=es (por defecto) o ?lang=en ----
+const params = new URLSearchParams(location.search);
+const LANG = params.get("lang") === "en" ? "en" : "es";
+const TX = {
+  es: {
+    title: "Escenas de MindChess · draw(t)", h_scene: "La escena: una función de t", a_pick: "Escena", coins: "Monedas → insignia", bots: "Encuentra tu rival",
+    pause: "Pausa", play: "Reproducir", still_btn: "Reducir movimiento",
+    still_help: "«Reducir movimiento» enseña el fotograma quieto que pinta la app cuando ese ajuste de accesibilidad de iOS está activado.", speed: "velocidad", h_spring: "El muelle: spring(x, w)", a_curve: "Curva del muelle amortiguado",
+    damping: "amortiguación", freq: "frecuencia w", playing: "reproduciendo", paused: "en pausa: arrastra t", still: (s) => `fotograma quieto (stillTime = ${s})`,
+    a_coins: "Diez monedas caen en un anillo y se funden en una insignia", a_bots: "Aparecen tres rivales, se elige a Sofía, se sienta junto al tablero y se juega 1.e4 e5",
+    m_coins: "moneda 1", m_bots: "Sofía se sienta",
+    n_coins: "Las escenas usan siempre 0,78. Las monedas caen con w = 16 y el anillo se funde con w = 10. Aquí puedes ver cómo cambia la forma del muelle.",
+    n_bots: "Las escenas usan siempre 0,78. Sofía va a su sitio con w = 9 y su tarjeta se ilumina con w = 16. Aquí puedes ver cómo cambia la forma del muelle.",
+  },
+  en: {
+    title: "MindChess scenes · draw(t)", h_scene: "The scene: a function of t", a_pick: "Scene", coins: "Coins → badge", bots: "Find your rival",
+    pause: "Pause", play: "Play", still_btn: "Reduce Motion",
+    still_help: "“Reduce Motion” shows the still frame the app draws when that iOS accessibility setting is on.", speed: "speed", h_spring: "The spring: spring(x, w)", a_curve: "Damped spring curve",
+    damping: "damping", freq: "frequency w", playing: "playing", paused: "paused: drag t", still: (s) => `still frame (stillTime = ${s})`,
+    a_coins: "Ten coins drop into a ring and melt into a badge", a_bots: "Three rivals appear, Sofía is picked, she sits down by the board and 1.e4 e5 is played",
+    m_coins: "coin 1", m_bots: "Sofía sits down",
+    n_coins: "The scenes always use 0.78. The coins drop with w = 16 and the ring melts with w = 10. Here you can see how the shape of the spring changes.",
+    n_bots: "The scenes always use 0.78. Sofía moves to her seat with w = 9 and her card lights up with w = 16. Here you can see how the shape of the spring changes.",
+  },
+};
+const tr = (k) => TX[LANG][k];
+const num = (x, d) => LANG === "es" ? x.toFixed(d).replace(".", ",") : x.toFixed(d);
+document.documentElement.lang = LANG; document.title = tr("title");
+document.querySelectorAll("[data-i18n]").forEach((el) => { el.textContent = tr(el.dataset.i18n); });
+document.querySelectorAll("[data-i18n-title]").forEach((el) => { el.title = tr(el.dataset.i18nTitle); });
+document.querySelectorAll("[data-i18n-aria]").forEach((el) => { el.setAttribute("aria-label", tr(el.dataset.i18nAria)); });
+
+// ---- La curva que se marca en cada escena: el muelle que mueve la pieza principal ----
+const FOCUS = { coins: { w: 16, start: 0.35, mark: "m_coins" }, bots: { w: 9, start: 2.0, mark: "m_bots" } };
+const M = window.MOTION;
+// el mismo muelle que M.S del kit, con la amortiguación como parámetro para dibujar la curva
+let Z = 0.78, W_CURVE = 16;
+function spring(x, w, z = Z) {
+  if (x <= 0) return 0;
+  if (z >= 0.999) { const e = Math.exp(-w * x); return 1 - e * (1 + w * x); }
+  const wd = w * Math.sqrt(1 - z * z), e = Math.exp(-z * w * x);
+  return 1 - e * (Math.cos(wd * x) + (z * w / wd) * Math.sin(wd * x));
+}
+
+// ---- Reproducción: como MotionSceneView (el tiempo de la escena es t; con su speed, la app la recorre más deprisa) ----
+const sc = document.getElementById("scene"), stage = document.getElementById("stage");
+const tInput = document.getElementById("t"), tval = document.getElementById("tval");
+const playBtn = document.getElementById("play"), stillBtn = document.getElementById("still"), stateEl = document.getElementById("state");
+const speedInput = document.getElementById("speed"), speedval = document.getElementById("speedval");
+let name = params.get("scene") === "bots" ? "bots" : "coins", def;
+// con ?scene= la escena queda fija (el blog pone cada una en su sitio); sin él, se puede elegir
+if (params.has("scene")) document.getElementById("picker").hidden = true;
+let playing = true, reduceMotion = false, t = 0, last = performance.now(), speed = 1;
+
+function pick(n) {
+  name = n; def = M.scenes[n]; t = 0;
+  sc._motion = { def, opts: {} };
+  sc.setAttribute("aria-label", tr("a_" + n));
+  tInput.max = def.dur;
+  speed = def.speed; speedInput.value = speed; speedval.textContent = speed.toFixed(2) + "×";
+  W_CURVE = FOCUS[n].w; document.getElementById("w").value = W_CURVE; document.getElementById("wval").textContent = W_CURVE;
+  document.getElementById("note").textContent = tr("n_" + n);
+  document.querySelectorAll("[data-scene]").forEach((b) => b.setAttribute("aria-pressed", b.dataset.scene === n));
+  render();
+}
+function render() {
+  const time = reduceMotion ? def.still : t;
+  M.render(sc, time);
+  tInput.value = time; tval.textContent = time.toFixed(2) + " s";
+  stateEl.textContent = reduceMotion ? tr("still")(num(def.still, 1) + " s") : playing ? tr("playing") : tr("paused");
+  drawCurve(time);
+}
+function tick(now) {
+  const dt = (now - last) / 1000; last = now;
+  if (playing && !reduceMotion) t = (t + dt * speed) % def.dur;
+  render(); // también en pausa: las piezas y los avatares se ven en cuanto cargan
+  requestAnimationFrame(tick);
+}
+document.querySelectorAll("[data-scene]").forEach((b) => b.onclick = () => pick(b.dataset.scene));
+playBtn.onclick = () => { playing = !playing; playBtn.textContent = playing ? tr("pause") : tr("play"); };
+stillBtn.onclick = () => { reduceMotion = !reduceMotion; stillBtn.setAttribute("aria-pressed", reduceMotion); };
+tInput.oninput = () => { playing = false; reduceMotion = false; stillBtn.setAttribute("aria-pressed", false); playBtn.textContent = tr("play"); t = +tInput.value; };
+speedInput.oninput = () => { speed = +speedInput.value; speedval.textContent = speed.toFixed(2) + "×"; };
+
+// ---- La curva ----
+const cc = document.getElementById("curve"), cctx = cc.getContext("2d");
+const css = (v) => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+function drawCurve(time) {
+  const W = cc.width, H = cc.height, pad = 36, X = 1.2;
+  cctx.clearRect(0, 0, W, H);
+  const px = x => pad + (x / X) * (W - 2 * pad), py = y => H - pad - (y / 1.3) * (H - 2 * pad);
+  cctx.strokeStyle = css("--line"); cctx.lineWidth = 1;
+  [0, 1].forEach(y => { cctx.beginPath(); cctx.moveTo(pad, py(y)); cctx.lineTo(W - pad, py(y)); cctx.stroke(); });
+  cctx.fillStyle = css("--text2"); cctx.font = "22px ui-monospace, Menlo, monospace";
+  cctx.fillText("1", 8, py(1) + 7); cctx.fillText("0", 8, py(0) + 7); cctx.fillText(num(X, 1) + " s", W - pad - 60, H - 8);
+  cctx.beginPath();
+  for (let i = 0; i <= 240; i++) { const x = i / 240 * X, y = spring(x, W_CURVE); i ? cctx.lineTo(px(x), py(y)) : cctx.moveTo(px(x), py(y)); }
+  cctx.strokeStyle = css("--accent"); cctx.lineWidth = 4; cctx.stroke();
+  const f = FOCUS[name], x = time - f.start;
+  if (x > 0 && x < X) {
+    const right = x > X * 0.6;
+    cctx.beginPath(); cctx.arc(px(x), py(spring(x, W_CURVE)), 9, 0, Math.PI * 2); cctx.fillStyle = css("--accent"); cctx.fill();
+    cctx.fillStyle = css("--text2"); cctx.textAlign = right ? "right" : "left";
+    cctx.fillText(tr(f.mark), px(x) + (right ? -14 : 14), py(spring(x, W_CURVE)) - 14); cctx.textAlign = "left";
+  }
+}
+document.getElementById("z").oninput = (e) => { Z = +e.target.value; document.getElementById("zval").textContent = Z.toFixed(2); };
+document.getElementById("w").oninput = (e) => { W_CURVE = +e.target.value; document.getElementById("wval").textContent = W_CURVE; };
+
+// ---- Tema: sigue al blog (postMessage) o al sistema; la escena usa la paleta del kit para ese esquema ----
+function setTheme(th) { document.documentElement.dataset.theme = th; stage.dataset.scheme = th; }
+setTheme(params.get("theme") || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"));
+addEventListener("message", e => { if (e.data && e.data.nsdemoTheme) setTheme(e.data.nsdemoTheme); });
+pick(name);
+requestAnimationFrame(tick);
+// ---- Alto: le dice al blog cuánto mide, para que el iframe tenga justo ese alto y no haga scroll ----
+function sendHeight() { if (parent !== window) parent.postMessage({ nsdemoHeight: Math.ceil(document.body.getBoundingClientRect().height) }, "*"); }
+new ResizeObserver(sendHeight).observe(document.body);
+addEventListener("load", sendHeight);
+</script>
+</body>
+</html>
